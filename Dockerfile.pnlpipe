@@ -2,41 +2,65 @@ FROM centos:7.5.1804
 
 MAINTAINER Tashrif Billah <tbillah@bwh.harvard.edu>
 
-    # set up user and working directory
-ARG USER=pnlbwh
-ENV USER="$USER"
-ARG CWD=/home/$USER
-WORKDIR $CWD
-ENV HOME="$CWD"
-ENV PWD="$CWD"
+    # set up working directory, redefine home directory, remain root user
+WORKDIR /home/pnlbwh
+ENV HOME=/home/pnlbwh
+ENV USER="root"
+
+COPY startup.sh /
 
     # install required libraries
 RUN yum -y groupinstall 'development tools' && \
-    yum -y install wget file bzip2 which vim git make libstdc++-static && \
+    yum -y install wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh && \
     yum clean all && \
     #
-    # install python
+    # install freesurfer
+    echo "Downloading FreeSurfer" && \
+    wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz > /dev/null 2>&1 && \
+    echo "Unzipping FreeSurfer tar ball" && \
+    tar -xzf freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz && \
+    rm -f freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz && \
+    mv freesurfer freesurfer-6.0.0 && \
+    #
+    # install FSL
+    echo "Downloading FSL installer" && \
+    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py -O fslinstaller.py > /dev/null 2>&1 && \
+    echo "Installing FSL" && \
+    python fslinstaller.py -V 5.0.11 -d $HOME/fsl-5.0.11 -p > /dev/null 2>&1 && \
+    # setup FSL environment
+    export FSLDIR=$HOME/fsl-5.0.11 && \
+    source $FSLDIR/etc/fslconf/fsl.sh && \
+    # apply patch
+    echo "Installing FSL patch" && \
+    $FSLDIR/fslpython/bin/conda install -y -n fslpython -c conda-forge deprecation==1.* > /dev/null 2>&1 && \
+    $FSLDIR/fslpython/bin/conda clean -y --all && \
+    rm -f fslinstaller.py && \
+    #
+    # install miniconda3
     wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
     /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
     git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
     #
     # create conda environment
+    cp /root/.bashrc $HOME/ && \
     echo "source miniconda3/bin/activate" >> ~/.bashrc && \
     source miniconda3/bin/activate && \
     conda env create -f pnlpipe/python_env/environment36.yml && \
     echo "conda activate pnlpipe3" >> ~/.bashrc && \
     conda activate pnlpipe3 && \
     #
-    # remove incompatible libicuuc.*
-    rm -rf miniconda3/envs/pnlpipe3/lib/libicuuc.* && \
+    # back up incompatible libicuuc.*
+    mv miniconda3/envs/pnlpipe3/lib/libicuuc.* /tmp/ && \
     cd pnlpipe && mkdir soft_dir && export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir && \
     ./pnlpipe std init && \
     ./pnlpipe std setup && \
+    mv /tmp/libicuuc.* $HOME/miniconda3/envs/pnlpipe3/lib/ && \
     #
     # clean up sources
     conda clean -y --all && \
     rm -f $HOME/Miniconda3-latest-Linux-x86_64.sh && \
     cd soft_dir && rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ukftractography UKFTractography-build dcm2niix && \
+    rm -rf /tmp/* /var/tmp/* && \
     #
     # set up bashrc i.e shell
     echo "export PNLPIPE_SOFT=\$HOME/pnlpipe/soft_dir" >> ~/.bashrc && \
@@ -46,10 +70,16 @@ RUN yum -y groupinstall 'development tools' && \
     echo "source \${PNLPIPE_SOFT}/UKFTractography-662c16f/env.sh" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/dcm2niix-54cfd51/env.sh" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/tract_querier-d4a88aa/env.sh" >> ~/.bashrc && \
-    echo "export FSLDIR=\$HOME/fsl" >> ~/.bashrc && \
+    echo "export FSLDIR=\$HOME/fsl-5.0.11" >> ~/.bashrc && \
     echo "source \$FSLDIR/etc/fslconf/fsl.sh" >> ~/.bashrc && \
     echo "export PATH=\$FSLDIR/bin:\$PATH" >> ~/.bashrc && \
-    echo "export FREESURFER_HOME=\$HOME/freesurfer" >> ~/.bashrc && \
+    echo "export FREESURFER_HOME=\$HOME/freesurfer-6.0.0" >> ~/.bashrc && \
     echo "source \${FREESURFER_HOME}/SetUpFreeSurfer.sh" >> ~/.bashrc && \
-    echo "export PATH=\$HOME/pnlpipe/pnlscripts:\$PATH" >> ~/.bashrc
+    echo "export PATH=\$HOME/pnlpipe/pnlscripts:\$PATH" >> ~/.bashrc && \
+    #
+    # change permission of startup script 
+    chmod +x /startup.sh
+
+
+ENTRYPOINT ["/startup.sh"]
 

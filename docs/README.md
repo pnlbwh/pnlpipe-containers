@@ -41,16 +41,12 @@ The containers contain the following software:
 * [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
 * [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
 
-You should download and install them directly from their websites and then run *pnlpipe* as follows:
+They are already installed in the *tbillah/pnlpipe* docker image. Befor using the image, you should review their respective licenses. A salient clause of FSL license states it is not free for commercial use. So, if you use *tbillah/pnlpipe* image, make sure you are aware of that limitation. The maintainer of this image is not and cannot be held liable for unlawful use of this image. On the other hand, obtain a FreeSurfer license key from [here](https://surfer.nmr.mgh.harvard.edu/fswiki/License) and save it as `license.txt` file in your host machine. To be able to run FreeSurfer, you have to mount the license key to this image as follows:
 
-> docker run --rm -ti -v /host/path/to/freesurfer:/home/pnlbwh/freesurfer -v /host/path/to/fsl:/home/pnlbwh/fsl tbillah/pnlpipe
+> docker run --rm -ti -v /host/path/to/freesurfer-license.txt:/home/pnlbwh/freesurfer-6.0.0/license.txt tbillah/pnlpipe
 
-In the above, `/host/path/to/` is where you install the software and the host software are mounted on the container `tbillah/pnlpipe`. 
+
 When you run the container like above, it will give you a shell with all of the above software.
-
-
-**NOTE** *FreeSurfer* and *FSL* are assumed to be mounted on the container interactive shell (`-ti` flag). 
-So make sure to install them on your host machine and mount them before launching the interactive shell.
 
 
 # Citation
@@ -59,6 +55,7 @@ If *pipeline* container is useful in your research, please cite as below:
 
 Billah, Tashrif*; Eckbo, Ryan*; Bouix, Sylvain; Norton, Isaiah; Processing pipeline for anatomical and diffusion weighted images, 
 https://github.com/pnlbwh/pnlpipe, 2018, DOI: 10.5281/zenodo.2584271
+
 
 # Tests
 
@@ -85,8 +82,7 @@ You are welcome to read the details of *pnlpipe* at https://github.com/pnlbwh/pn
 
 With the above `docker run` command, just mount another directory that contains your data that you would like to analyze using *pnlpipe*:
 
-> docker run --rm -ti -v /host/path/to/freesurfer:/home/pnlbwh/freesurfer -v /host/path/to/fsl:/home/pnlbwh/fsl 
--v /host/path/to/myData:/home/pnlbwh/myData tbillah/pnlpipe
+> docker run --rm -ti -v /host/path/to/freesurfer-license.txt:/home/pnlbwh/freesurfer-6.0.0/license.txt -v /host/path/to/myData:/home/pnlbwh/myData tbillah/pnlpipe
 
 The files you generate at `/home/pnlbwh/myData` are saved at `/host/path/to/myData`.
 
