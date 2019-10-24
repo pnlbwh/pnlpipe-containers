@@ -34,7 +34,7 @@ The containers contain the following software:
 * dcm2niix
 * trainingDataT1AHCC
 * trainingDataT2Masks
-
+* whitematteranalysis
 
 *pnlpipe* pipeline depends on two other software, installation of which requires you to agree to their license terms:
 
