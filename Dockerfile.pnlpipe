@@ -11,8 +11,8 @@ COPY startup.sh /
 
     # install required libraries
 RUN yum -y groupinstall 'development tools' && \
-    yum -y install wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh && \
-    yum clean all && \
+    yum -y install wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh libSM && \
+    yum clean all
     #
     # install freesurfer
     echo "Downloading FreeSurfer" && \
@@ -36,13 +36,24 @@ RUN yum -y groupinstall 'development tools' && \
     $FSLDIR/fslpython/bin/conda clean -y --all && \
     rm -f fslinstaller.py && \
     #
+    # install miniconda2 ans whitematteranalysis package
+    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O Miniconda2-latest-Linux-x86_64.sh && \
+    /bin/bash Miniconda2-latest-Linux-x86_64.sh -b -p miniconda2/ && \
+    source miniconda2/bin/activate && \
+    pip install git+https://github.com/SlicerDMRI/whitematteranalysis.git && \
+    cp /root/.bashrc $HOME/ && \
+    echo "export PY2BIN=\$HOME/miniconda2/bin" >> ~/.bashrc && \
+    rm -rf .cache/pip/* && \
+    rm -f Miniconda2-latest-Linux-x86_64.sh && \
+    conda clean -y --all
+    
+
     # install miniconda3
-    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
     /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
     git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
     #
     # create conda environment
-    cp /root/.bashrc $HOME/ && \
     echo "source miniconda3/bin/activate" >> ~/.bashrc && \
     source miniconda3/bin/activate && \
     conda env create -f pnlpipe/python_env/environment36.yml && \
