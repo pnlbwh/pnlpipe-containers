@@ -27,7 +27,7 @@ This repository provides recipes for building [*pnlpipe* software](https://githu
 The containers contain the following software:
 
 * python3
-* ANTs
+* ANTs=2.3.0
 * BRAINSTools
 * UKFTractography
 * tract_querier
@@ -38,12 +38,12 @@ The containers contain the following software:
 
 *pnlpipe* pipeline depends on two other software, installation of which requires you to agree to their license terms:
 
-* [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall)
-* [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation)
+* [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) 7.1.0
+* [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation) 6.0.1
 
 They are already installed in the *tbillah/pnlpipe* docker image. Befor using the image, you should review their respective licenses. A salient clause of FSL license states it is not free for commercial use. So, if you use *tbillah/pnlpipe* image, make sure you are aware of that limitation. The maintainer of this image is not and cannot be held liable for unlawful use of this image. On the other hand, obtain a FreeSurfer license key from [here](https://surfer.nmr.mgh.harvard.edu/fswiki/License) and save it as `license.txt` file in your host machine. To be able to run FreeSurfer, you have to mount the license key to this image as follows:
 
-> docker run --rm -ti -v /host/path/to/freesurfer-license.txt:/home/pnlbwh/freesurfer-6.0.0/license.txt tbillah/pnlpipe
+> docker run --rm -ti -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt tbillah/pnlpipe
 
 
 When you run the container like above, it will give you a shell with all of the above software.
@@ -82,7 +82,7 @@ You are welcome to read the details of *pnlpipe* at https://github.com/pnlbwh/pn
 
 With the above `docker run` command, just mount another directory that contains your data that you would like to analyze using *pnlpipe*:
 
-> docker run --rm -ti -v /host/path/to/freesurfer-license.txt:/home/pnlbwh/freesurfer-6.0.0/license.txt -v /host/path/to/myData:/home/pnlbwh/myData tbillah/pnlpipe
+> docker run --rm -ti -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt -v /host/path/to/myData:/home/pnlbwh/myData tbillah/pnlpipe
 
 The files you generate at `/home/pnlbwh/myData` are saved at `/host/path/to/myData`.
 
