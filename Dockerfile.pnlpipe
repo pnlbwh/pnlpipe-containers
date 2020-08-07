@@ -39,7 +39,7 @@ RUN yum -y groupinstall 'development tools' && \
     source miniconda2/bin/activate && \
     pip install git+https://github.com/SlicerDMRI/whitematteranalysis.git && \
     cp /root/.bashrc $HOME/ && \
-    echo "export PY2BIN=\$HOME/miniconda2/bin" >> ~/.bashrc && \
+    echo "export PY2BIN=$HOME/miniconda2/bin" >> ~/.bashrc && \
     rm -rf .cache/pip/* && \
     rm -f Miniconda2-latest-Linux-x86_64.sh && \
     conda clean -y --all
@@ -71,23 +71,27 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     rm -rf /tmp/* /var/tmp/* && \
     #
     # set up bashrc i.e shell
-    echo "export PNLPIPE_SOFT=\$HOME/pnlpipe/soft_dir" >> ~/.bashrc && \
+    echo "export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir" >> ~/.bashrc && \
     echo "alias ls=\"ls --color\"" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/BRAINSTools-bin-81a409d/env.sh" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/ANTs-bin-ca32228/env.sh" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/UKFTractography-2c144a3/env.sh" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/dcm2niix-c0a3731/env.sh" >> ~/.bashrc && \
     echo "source \${PNLPIPE_SOFT}/tract_querier-d4a88aa/env.sh" >> ~/.bashrc && \
-    echo "export FSLDIR=\$HOME/fsl-6.0.1" >> ~/.bashrc && \
+    echo "export FSLDIR=$HOME/fsl-6.0.1" >> ~/.bashrc && \
     echo "source \$FSLDIR/etc/fslconf/fsl.sh" >> ~/.bashrc && \
     echo "export PATH=\$FSLDIR/bin:\$PATH" >> ~/.bashrc && \
-    echo "export FREESURFER_HOME=\$HOME/freesurfer-7.1.0" >> ~/.bashrc && \
+    echo "export FREESURFER_HOME=$HOME/freesurfer-7.1.0" >> ~/.bashrc && \
     echo "source \${FREESURFER_HOME}/SetUpFreeSurfer.sh" >> ~/.bashrc && \
-    echo "export PATH=\$HOME/pnlpipe/pnlscripts:\$PATH" >> ~/.bashrc && \
+    echo "export PATH=$HOME/pnlpipe/pnlscripts:\$PATH" >> ~/.bashrc && \
+    #
+    # facilitate creation of ~/matlab/startup.m
+    export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
+    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
     #
     # change permission of startup script 
     chmod +x /startup.sh
-
+    
 
 ENTRYPOINT ["/startup.sh"]
 
