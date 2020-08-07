@@ -87,7 +87,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     #
     # facilitate creation of ~/matlab/startup.m
     export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
-    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
+    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh && \
     #
     # change permission of startup script 
     chmod +x /startup.sh
