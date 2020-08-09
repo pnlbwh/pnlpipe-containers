@@ -80,6 +80,14 @@ Singularity mounts `$HOME` directory by default. So, if your data is in any subd
 `--bind /host/path/to/myData:/home/pnlbwh/myData`.
 
 
+**NOTE** While trying to analyze data, if you run into write permission issue, use the `--writable-tmpfs` flag:
+
+    singularity shell --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
+    --bind /host/path/to/myData:/home/pnlbwh/myData \
+    --writable-tmpfs \
+    pnlpipe.sif
+    
+
 # Citation
 
 If *pipeline* containers are useful in your research, please cite as below:
@@ -105,22 +113,15 @@ The above should print corresponding help messages without any error.
 ## Detailed test
 Additionally, you can run *pnlpipe* test https://github.com/pnlbwh/pnlpipe#tests to before doing your data analysis.
 
-
 You are welcome to read the details of *pnlpipe* at https://github.com/pnlbwh/pnlpipe
 
 
 # Data analysis
 
-With the above `docker run` command, just mount another directory that contains your data that you would like to analyze using *pnlpipe*:
+With the above `docker run` and `singularity shell` commands, you mount your data inside the containers 
+so you can analyze using *pnlpipe*. The files you generate at `/home/pnlbwh/myData` are saved at `/host/path/to/myData`.
 
-    docker run --rm -ti -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
-    -v /host/path/to/myData:/home/pnlbwh/myData \
-    tbillah/pnlpipe
-
-The files you generate at `/home/pnlbwh/myData` are saved at `/host/path/to/myData`.
-
-
-**NOTE** The container `tbillah/pnlpipe` is not equipped with GUI. So, if you need to visually look at your MRI-- 
+**NOTE** The containers are not equipped with GUI by default. So, if you need to visually look at your MRI-- 
 launch fsleyes, freeview etc from your host machine, not from the container. Since processed data is saved in 
 the host directory that you mounted on the container, it should not be a problem to explore them from your host 
 machine. Optionally, if you want to run applications that require GUI support, 
