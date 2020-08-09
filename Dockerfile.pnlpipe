@@ -37,9 +37,12 @@ RUN yum -y groupinstall 'development tools' && \
     wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O Miniconda2-latest-Linux-x86_64.sh && \
     /bin/bash Miniconda2-latest-Linux-x86_64.sh -b -p miniconda2/ && \
     source miniconda2/bin/activate && \
-    pip install git+https://github.com/SlicerDMRI/whitematteranalysis.git && \
+    conda create -y -n wma python=2.7.13 && conda activate wma && \
+    pip install git+https://github.com/SlicerDMRI/whitematteranalysis.git@fa98f26087d6cf26fcb2a1d50a7a18d73c361d93 && \
+    #
+    # initialize .bashrc
     cp /root/.bashrc $HOME/ && \
-    echo "export PY2BIN=$HOME/miniconda2/bin" >> ~/.bashrc && \
+    echo "export PY2BIN=$HOME/miniconda2/envs/wma/bin" >> ~/.bashrc && \
     rm -rf .cache/pip/* && \
     rm -f Miniconda2-latest-Linux-x86_64.sh && \
     conda clean -y --all
@@ -51,7 +54,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
     #
     # create conda environment
-    echo "source miniconda3/bin/activate" >> ~/.bashrc && \
+    echo "source $HOME/miniconda3/bin/activate" >> ~/.bashrc && \
     source miniconda3/bin/activate && \
     conda env create -f pnlpipe/python_env/environment36.yml && \
     echo "conda activate pnlpipe3" >> ~/.bashrc && \
