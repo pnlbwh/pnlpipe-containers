@@ -58,12 +58,21 @@ When you run the container like above, it will give you a shell with all of the 
 
 ## Singularity
 
-    singularity build pnlpipe.sif docker-archive://tbillah/pnlpipe:latest
+(i) Build the container bootstrapping around our docker container:
+
+    export SINGULARITY_TMPDIR=$HOME
+    singularity build pnlpipe.sif docker-://tbillah/pnlpipe:latest
+    
+
+(ii) Shell into the built container:
+    
     singularity shell --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
     --bind /host/path/to/myData:/home/pnlbwh/myData \
     pnlpipe.sif
+
+
+(iii) Once inside the container, source *pnlpipe* environment:
     
-    (inside the container)
     alias ls='ls --color'
     source /home/pnlbwh/.bashrc
 
