@@ -33,7 +33,7 @@ RUN yum -y groupinstall 'development tools' && \
     $FSLDIR/fslpython/bin/conda clean -y --all && \
     rm -f fslinstaller.py && \
     #
-    # install miniconda2 ans whitematteranalysis package
+    # install miniconda2 and whitematteranalysis package
     wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O Miniconda2-latest-Linux-x86_64.sh && \
     /bin/bash Miniconda2-latest-Linux-x86_64.sh -b -p miniconda2/ && \
     source miniconda2/bin/activate && \
