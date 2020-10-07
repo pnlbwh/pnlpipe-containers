@@ -61,7 +61,7 @@ When you run the container like above, it will give you a shell with all of the 
 (i) Build the container bootstrapping around our docker container:
 
     export SINGULARITY_TMPDIR=$HOME
-    singularity build pnlpipe.sif docker-://tbillah/pnlpipe:latest
+    singularity build pnlpipe.sif docker://tbillah/pnlpipe:latest
     
 
 (ii) Shell into the built container:
