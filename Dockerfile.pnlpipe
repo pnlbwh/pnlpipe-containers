@@ -52,6 +52,7 @@ RUN yum -y groupinstall 'development tools' && \
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
     /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
     git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
+    git clone https://github.com/pnlbwh/pnlNipype.git && \
     #
     # create conda environment
     echo "source $HOME/miniconda3/bin/activate" >> ~/.bashrc && \
@@ -68,6 +69,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     mv /tmp/libicuuc.* $HOME/miniconda3/envs/pnlpipe3/lib/ && \
     #
     # clean up sources
+    conda deactivate pnlpipe3 && \
     conda clean -y --all && \
     rm -f $HOME/Miniconda3-latest-Linux-x86_64.sh && \
     cd soft_dir && rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ukftractography UKFTractography-build dcm2niix && \
@@ -86,7 +88,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     echo "export PATH=\$FSLDIR/bin:\$PATH" >> ~/.bashrc && \
     echo "export FREESURFER_HOME=$HOME/freesurfer-7.1.0" >> ~/.bashrc && \
     echo "source \${FREESURFER_HOME}/SetUpFreeSurfer.sh" >> ~/.bashrc && \
-    echo "export PATH=$HOME/pnlpipe/pnlscripts:\$PATH" >> ~/.bashrc && \
+    echo "export PATH=$HOME/pnlNipype/exec:$HOME/pnlpipe/pnlscripts:\$PATH" >> ~/.bashrc && \
     #
     # facilitate creation of ~/matlab/startup.m
     export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
