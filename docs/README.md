@@ -5,17 +5,14 @@
 Developed by Tashrif Billah and Sylvain Bouix, Brigham and Women's Hospital (Harvard Medical School).
 
 
-Table of Contents
+Table of contents
 =================
 
-   * [Table of Contents](#table-of-contents)
    * [pnlpipe containers](#pnlpipe-containers)
       * [Docker](#docker)
       * [Singularity](#singularity)
    * [Citation](#citation)
    * [Tests](#tests)
-      * [Nominal test](#nominal-test)
-      * [Detailed test](#detailed-test)
    * [Data analysis](#data-analysis)
 
 Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
@@ -24,7 +21,6 @@ Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-mark
 # pnlpipe containers
 
 The *pnlpipe* docker container is publicly hosted at [https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe](https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe)
-
 
 This repository provides recipes for building [*pnlpipe* software](https://github.com/pnlbwh/pnlpipe_software) containers.
 The containers contain the following software:
@@ -44,48 +40,60 @@ The containers contain the following software:
 * [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) 7.1.0
 * [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation) 6.0.1
 
-They are already installed in the *tbillah/pnlpipe* docker image. Befor using the image, you should review their respective licenses. A salient clause of FSL license states it is not free for commercial use. So, if you use *tbillah/pnlpipe* image, make sure you are aware of that limitation. The maintainer of this image is not and cannot be held liable for unlawful use of this image. On the other hand, obtain a FreeSurfer license key from [here](https://surfer.nmr.mgh.harvard.edu/fswiki/License) and save it as `license.txt` file in your host machine. To be able to run FreeSurfer, you have to mount the license key to this image as follows:
+They are already installed in the *tbillah/pnlpipe* docker image. Befor using the image, you should review their 
+respective licenses. A salient clause of FSL license states it is not free for commercial use. 
+So, if you use *tbillah/pnlpipe* image, make sure you are aware of that limitation. The maintainer of this image is not 
+and cannot be held liable for unlawful use of this image. On the other hand, obtain a FreeSurfer license key from [here](https://surfer.nmr.mgh.harvard.edu/fswiki/License) 
+and save it as `license.txt` file in your host machine. To be able to run FreeSurfer, you have to mount the license to 
+this images as explained below.
+
 
 ## Docker
 
-    docker run --rm -ti -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
+    docker run --rm -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
     -v /host/path/to/myData:/home/pnlbwh/myData \
-    tbillah/pnlpipe
+    tbillah/pnlpipe \
+    "nifti_atlas -t /home/pnlbwh/myData/t1w.nii.gz -o /home/pnlbwh/myData/t1Mask --train /home/pnlbwh/myData/yourTrainingT1Masks.csv"
 
-When you run the container like above, it will give you a shell with all of the above software. 
-`-v /host/path/to/myData:/home/pnlbwh/data` is for mounting your data into the container so you can analyze.
+* Please make sure to enclose your command within double quotes--`"nifti_atlas ..."`.
+* `-v /host/path/to/myData:/home/pnlbwh/data` is for mounting your data into the container so you can analyze.
+* If you would like an interactive shell into the container, use `docker run --rm -ti ...` and omit the command in `" "`.
 
 
 ## Singularity
 
-(i) Build the container bootstrapping around our docker container:
+(i) Download pre-built singularity image from our Dropbox:
 
-    export SINGULARITY_TMPDIR=$HOME
-    singularity build pnlpipe.sif docker://tbillah/pnlpipe:latest
-    
+    wget https://www.dropbox.com/s/8qtqjisfnv5t9i5/pnlpipe.sif
 
-(ii) Shell into the built container:
-    
-    singularity shell --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
+Because of limited storage quota, it could not be hosted in https://cloud.sylabs.io/library/.
+
+
+(ii) Process your data:
+
+    singularity run --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
     --bind /host/path/to/myData:/home/pnlbwh/myData \
-    pnlpipe.sif
+    pnlpipe.sif \
+    nifti_atlas -t /home/pnlbwh/myData/t1w.nii.gz -o /home/pnlbwh/myData/t1Mask --train /home/pnlbwh/myData/yourTrainingT1Masks.csv
+
+* Notice that you do NOT need to enclose your command within double quotes.
+* `--bind` is for mounting your data into the container so you can analyze. Singularity mounts `$HOME` directory by default. 
+So, if your data is in any subdirectory of `$HOME`, you should NOT need to mount them.
+* If you would like an interactive shell into the container, use `singularity shell ...` and omit the command to run. 
+Once inside the shell, you might want to set `alias ls='ls --color'` in the first place.
+* While trying to analyze data, if you run into write permission issue, use the `singularity run --writable-tmpfs ...`.
 
 
-(iii) Once inside the container, source *pnlpipe* environment:
-    
-    alias ls='ls --color'
-    source /home/pnlbwh/.bashrc
 
-Singularity mounts `$HOME` directory by default. So, if your data is in any subdirectory of `$HOME`, you should NOT need 
-`--bind /host/path/to/myData:/home/pnlbwh/myData`.
+# Programs
 
+All *pnlpipe* scripts and executables are available to `docker run ...` and `singularity run ...`. 
+You may learn more about them in the corresponding tutorials:
 
-**NOTE** While trying to analyze data, if you run into write permission issue, use the `--writable-tmpfs` flag:
+*pnlNipype* https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md
 
-    singularity shell --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
-    --bind /host/path/to/myData:/home/pnlbwh/myData \
-    --writable-tmpfs \
-    pnlpipe.sif
+*pnlpipe*   https://github.com/pnlbwh/pnlpipe
+
     
 
 # Citation
@@ -98,7 +106,6 @@ https://github.com/pnlbwh/pnlpipe, 2018, DOI: 10.5281/zenodo.2584271
 
 # Tests
 
-## Nominal test
 Once inside the container, you can test its functionality with:
 
 > atlas.py --help
@@ -110,15 +117,11 @@ Once inside the container, you can test its functionality with:
 
 The above should print corresponding help messages without any error.
 
-## Detailed test
-Additionally, you can run *pnlpipe* test https://github.com/pnlbwh/pnlpipe#tests to before doing your data analysis.
-
-You are welcome to read the details of *pnlpipe* at https://github.com/pnlbwh/pnlpipe
 
 
 # Data analysis
 
-With the above `docker run` and `singularity shell` commands, you mount your data inside the containers 
+With the above `docker run` and `singularity run` commands, you mount your data inside the containers 
 so you can analyze using *pnlpipe*. The files you generate at `/home/pnlbwh/myData` are saved at `/host/path/to/myData`.
 
 **NOTE** The containers are not equipped with GUI by default. So, if you need to visually look at your MRI-- 
