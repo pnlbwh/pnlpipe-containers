@@ -43,15 +43,21 @@ The containers contain the following software:
 They are already installed in the *tbillah/pnlpipe* docker image. Befor using the image, you should review their 
 respective licenses. A salient clause of FSL license states it is not free for commercial use. 
 So, if you use *tbillah/pnlpipe* image, make sure you are aware of that limitation. The maintainer of this image is not 
-and cannot be held liable for unlawful use of this image. On the other hand, obtain a FreeSurfer license key from [here](https://surfer.nmr.mgh.harvard.edu/fswiki/License) 
-and save it as `license.txt` file in your host machine. To be able to run FreeSurfer, you have to mount the license to 
-this images as explained below.
+and cannot be held liable for any unlawful use of this image. On the other hand, obtain a FreeSurfer license key from [here](https://surfer.nmr.mgh.harvard.edu/fswiki/License) 
+and save it as `license.txt` file in your host machine. To be able to run FreeSurfer, you have to mount the license into 
+this images.
+
+Furthermore, if you want to use our CNN-Diffusion-MRIBrain-Segmentation tool, you must download IITmean_b0_256.nii.gz 
+locally and mount into this image:
+
+    wget https://www.nitrc.org/frs/download.php/11290/IITmean_b0_256.nii.gz
 
 
 ## Docker
 
     docker run --rm -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
     -v /host/path/to/myData:/home/pnlbwh/myData \
+    -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/ \
     tbillah/pnlpipe \
     "nifti_atlas -t /home/pnlbwh/myData/t1w.nii.gz -o /home/pnlbwh/myData/t1Mask --train /home/pnlbwh/myData/yourTrainingT1Masks.csv"
 
