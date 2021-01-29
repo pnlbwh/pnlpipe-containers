@@ -58,9 +58,7 @@ RUN git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
     cd CNN-Diffusion-MRIBrain-Segmentation && \
     wget https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/releases/download/v0.3/model_folder.tar.gz && \
     tar -xzvf model_folder.tar.gz && \
-    cd model_folder && \
-    wget https://www.nitrc.org/frs/download.php/11290/IITmean_b0_256.nii.gz
-    
+    cd model_folder
     
     # install miniconda3
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
