@@ -14,6 +14,8 @@ Table of contents
    * [Citation](#citation)
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
+   * [Appendix](#appendix)
+
 
 Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -136,4 +138,22 @@ the host directory that you mounted on the container, it should not be a problem
 machine. Optionally, if you want to run applications that require GUI support, 
 please see https://github.com/tashrifbillah/glxgears-containers for details.
 
+
+# Appendix
+
+### Cmake installation
+
+    yum -y install openssl-devel
+    wget https://github.com/Kitware/CMake/releases/download/v3.19.4/cmake-3.19.4.tar.gz
+    tar -xzf cmake-3.19.4.tar.gz
+    cd cmake-3.19.4 && mkdir build && cd build
+    ../bootstrap && make -j4
+    export PATH=`pwd`/build/bin:$PATH
+
+
+### ANTs from source
+
+Only one additional library should be required:
+
+    yum -y install zlib-devel
 
