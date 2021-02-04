@@ -80,18 +80,15 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
     rm -rf $HOME/Miniconda3-latest-Linux-x86_64.sh .cache/pip/*
     
     
-    # build pnlpipe dependencies
     # conda activate is required again because we are beginning a different RUN i.e. shell
 RUN source miniconda3/bin/activate && \
     conda activate pnlpipe3 && \
     export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
     #
-    # back up incompatible libicuuc.*
-    mv miniconda3/envs/pnlpipe3/lib/libicuuc.* /tmp/ && \
+    # build pnlpipe dependencies
     cd pnlpipe && mkdir soft_dir && export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir && \
     ./pnlpipe std init && \
     ./pnlpipe std setup && \
-    mv /tmp/libicuuc.* $HOME/miniconda3/envs/pnlpipe3/lib/ && \
     #
     # clean up sources
     cd soft_dir && \
