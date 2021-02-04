@@ -15,7 +15,8 @@ COPY .vimrc $HOME/
     # install required libraries
 RUN ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime && \
     yum -y groupinstall 'development tools' && \
-    yum -y install tree wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh libSM libXt-devel && \
+    yum -y install tree wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh libSM libXt-devel \
+    psmisc && \
     #
     # libraries for SlicerDMRI/FiberTractMeasurements
     yum -y install libGLU libXrender && \
