@@ -92,7 +92,7 @@ RUN source miniconda3/bin/activate && \
     #
     # clean up sources
     cd soft_dir && \
-    rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ukftractography UKFTractography-build dcm2niix && \
+    rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ANTs-bin-*/CMakeFiles ukftractography UKFTractography-build dcm2niix && \
     rm -rf /tmp/* /var/tmp/*
     
     
