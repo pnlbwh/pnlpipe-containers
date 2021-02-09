@@ -123,11 +123,6 @@ From: centos:7.5.1804
     cd $PNLPIPE_SOFT
     for d in `find . -name env.sh`; do echo source ${PNLPIPE_SOFT}/$d; done
     cd $HOME
-    source ${PNLPIPE_SOFT}/BRAINSTools-bin-81a409d/env.sh
-    source ${PNLPIPE_SOFT}/ANTs-bin-ca32228/env.sh
-    source ${PNLPIPE_SOFT}/UKFTractography-2c144a3/env.sh
-    source ${PNLPIPE_SOFT}/dcm2niix-c0a3731/env.sh
-    source ${PNLPIPE_SOFT}/tract_querier-d4a88aa/env.sh
     export FSLDIR=$HOME/fsl-6.0.1
     source $FSLDIR/etc/fslconf/fsl.sh
     export PATH=$FSLDIR/bin:$PATH
