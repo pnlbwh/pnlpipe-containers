@@ -20,8 +20,6 @@ From: centos:7.5.1804
     mkdir /home/pnlbwh
     cd /home/pnlbwh
     export HOME=`pwd`
-    export USER="root"
-    export LANG=en_US.UTF-8
     #
     # install required libraries
     yum -y groupinstall 'development tools' && \
@@ -107,6 +105,8 @@ From: centos:7.5.1804
     #
     # set up bashrc i.e shell
     export HOME=/home/pnlbwh/
+    export USER=`whoami`
+    export LANG=en_US.UTF-8
     #
     # miniconda3 pnlpipe3
     export CONDA_SHLVL=2
@@ -122,7 +122,7 @@ From: centos:7.5.1804
     # pnlpipe software
     export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir
     cd $PNLPIPE_SOFT
-    for d in `find . -name env.sh`; do echo source ${PNLPIPE_SOFT}/$d; done
+    for d in `find . -name env.sh`; do source ${PNLPIPE_SOFT}/$d; done
     cd $HOME
     export FSLDIR=$HOME/fsl-6.0.1
     source $FSLDIR/etc/fslconf/fsl.sh
