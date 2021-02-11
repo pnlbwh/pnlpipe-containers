@@ -58,8 +58,7 @@ RUN git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
     git clone https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation.git && \
     cd CNN-Diffusion-MRIBrain-Segmentation && \
     wget https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/releases/download/v0.3/model_folder.tar.gz && \
-    tar -xzvf model_folder.tar.gz && \
-    cd model_folder
+    tar -xzvf model_folder.tar.gz
     
     # install miniconda3
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
