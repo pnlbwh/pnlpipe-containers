@@ -98,7 +98,12 @@ From: centos:7.5.1804
     #
     # facilitate creation of ~/matlab/startup.m
     export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
-    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
+    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh && \
+    #
+    # provide write permissions
+    chmod a+w $HOME
+    chmod -R a+w $HOME/luigi-pnlpipe
+    chmod -R a+w $HOME/pnlpipe
     
     
 %environment
