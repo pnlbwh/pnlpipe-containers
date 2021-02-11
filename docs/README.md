@@ -68,6 +68,12 @@ locally and mount into this image:
 * If you would like an interactive shell into the container, use `docker run --rm -ti ...` and omit the command in `" "`.
 
 
+**NOTE** Instead of Docker Hub, you can also download the Docker image from our Dropbox:
+
+    wget https://www.dropbox.com/s/hfkyxvu9hvahumb/pnlpipe.tar.gz
+
+
+
 ## Singularity
 
 (i) Download pre-built singularity image from our Dropbox:
