@@ -22,83 +22,83 @@ From: centos:7.5.1804
     export HOME=`pwd`
     #
     # install required libraries
-    yum -y groupinstall 'development tools' && \
+    yum -y groupinstall 'development tools'
     yum -y install tree wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh libSM libXt-devel \
-    psmisc && \
-    yum clean all && \
-    rm -rf /var/cache/yum && \
+    psmisc
+    yum clean all
+    rm -rf /var/cache/yum
     #
     # install freesurfer
-    echo "Downloading FreeSurfer" && \
-    wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/7.1.0/freesurfer-linux-centos7_x86_64-7.1.0.tar.gz > /dev/null 2>&1 && \
-    echo "Unzipping FreeSurfer tar ball" && \
-    tar -xzf freesurfer-linux-centos7_x86_64-7.1.0.tar.gz && \
-    rm -f freesurfer-linux-centos7_x86_64-7.1.0.tar.gz && \
-    mv freesurfer freesurfer-7.1.0 && \
+    echo "Downloading FreeSurfer"
+    wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/7.1.0/freesurfer-linux-centos7_x86_64-7.1.0.tar.gz > /dev/null 2>&1
+    echo "Unzipping FreeSurfer tar ball"
+    tar -xzf freesurfer-linux-centos7_x86_64-7.1.0.tar.gz
+    rm -f freesurfer-linux-centos7_x86_64-7.1.0.tar.gz
+    mv freesurfer freesurfer-7.1.0
     #
     # install MCR for -subfields
-    cd freesurfer-7.1.0 && \
-    curl "https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime?action=AttachFile&do=get&target=runtime2014bLinux.tar.gz" -o "runtime2014b.tar.gz" && \
-    tar -xzf runtime2014b.tar.gz && rm -f runtime2014b.tar.gz && \
-    cd .. && \
+    cd freesurfer-7.1.0
+    curl "https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime?action=AttachFile&do=get&target=runtime2014bLinux.tar.gz" -o "runtime2014b.tar.gz"
+    tar -xzf runtime2014b.tar.gz && rm -f runtime2014b.tar.gz
+    cd ..
     #
     # install FSL
-    echo "Downloading FSL installer" && \
-    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py -O fslinstaller.py > /dev/null 2>&1 && \
-    echo "Installing FSL" && \
-    python fslinstaller.py -V 6.0.1 -d $HOME/fsl-6.0.1 -p > /dev/null 2>&1 && \
+    echo "Downloading FSL installer"
+    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py -O fslinstaller.py > /dev/null 2>&1
+    echo "Installing FSL"
+    python fslinstaller.py -V 6.0.1 -d $HOME/fsl-6.0.1 -p > /dev/null 2>&1
     # setup FSL environment
-    export FSLDIR=$HOME/fsl-6.0.1 && \
-    source $FSLDIR/etc/fslconf/fsl.sh && \
-    $FSLDIR/fslpython/bin/conda clean -y --all && \
-    rm -f fslinstaller.py && \
+    export FSLDIR=$HOME/fsl-6.0.1
+    source $FSLDIR/etc/fslconf/fsl.sh
+    $FSLDIR/fslpython/bin/conda clean -y --all
+    rm -f fslinstaller.py
     #
     # clone pnlpipe repositories
-    git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
-    git clone https://github.com/pnlbwh/pnlNipype.git && \
-    git clone https://github.com/pnlbwh/luigi-pnlpipe.git && \
+    git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git
+    git clone https://github.com/pnlbwh/pnlNipype.git
+    git clone https://github.com/pnlbwh/luigi-pnlpipe.git
     #
     # install CNN-Diffusion-MRIBrain-Segmentation
-    git clone https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation.git && \
-    cd CNN-Diffusion-MRIBrain-Segmentation && \
-    wget https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/releases/download/v0.3/model_folder.tar.gz && \
-    tar -xzvf model_folder.tar.gz && \
-    cd .. && \
+    git clone https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation.git
+    cd CNN-Diffusion-MRIBrain-Segmentation
+    wget https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/releases/download/v0.3/model_folder.tar.gz
+    tar -xzvf model_folder.tar.gz
+    cd ..
     #
     # install miniconda3
-    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
-    /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
+    wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh
+    /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/
     #
     # initialize .bashrc
-    cp /root/.bashrc $HOME/ && \
+    cp /root/.bashrc $HOME/
     #
     # create conda env
-    source miniconda3/bin/activate && \
-    conda env create -f pnlpipe/python_env/environment36.yml && \
-    conda activate pnlpipe3 && \
-    export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
+    source miniconda3/bin/activate
+    conda env create -f pnlpipe/python_env/environment36.yml
+    conda activate pnlpipe3
+    export FREESURFER_HOME=$HOME/freesurfer-7.1.0
     #
     # build pnlpipe dependencies
-    cd pnlpipe && mkdir soft_dir && export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir && \
-    ./pnlpipe std init && \
-    ./pnlpipe std setup && \
+    cd pnlpipe && mkdir soft_dir && export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir
+    ./pnlpipe std init
+    ./pnlpipe std setup
     #
     # clean up sources
-    conda deactivate && \
-    conda clean -y --all && \
-    rm -rf $HOME/Miniconda3-latest-Linux-x86_64.sh .cache/pip/* && \
-    cd soft_dir && \
-    rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ANTs-bin-*/CMakeFiles ukftractography UKFTractography-build dcm2niix && \
-    rm -rf /tmp/* /var/tmp/* && \
+    conda deactivate
+    conda clean -y --all
+    rm -rf $HOME/Miniconda3-latest-Linux-x86_64.sh .cache/pip/*
+    cd soft_dir
+    rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ANTs-bin-*/CMakeFiles ukftractography UKFTractography-build dcm2niix
+    rm -rf /tmp/* /var/tmp/*
     #
     # remove problematic aliases
-    sed -i "s/alias mv='mv -i'//g" ~/.bashrc && \
-    sed -i "s/alias cp='cp -i'//g" ~/.bashrc && \
-    sed -i "s/alias rm='rm -i'//g" ~/.bashrc && \
+    sed -i "s/alias mv='mv -i'//g" ~/.bashrc
+    sed -i "s/alias cp='cp -i'//g" ~/.bashrc
+    sed -i "s/alias rm='rm -i'//g" ~/.bashrc
     #
     # facilitate creation of ~/matlab/startup.m
-    export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
-    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh && \
+    export FREESURFER_HOME=$HOME/freesurfer-7.1.0
+    source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
     #
     # provide write permissions
     chmod a+w $HOME
