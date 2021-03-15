@@ -24,6 +24,8 @@ Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-mark
 
 The *pnlpipe* docker container is publicly hosted at [https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe](https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe)
 
+It can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0
+
 This repository provides recipes for building [*pnlpipe* software](https://github.com/pnlbwh/pnlpipe_software) containers.
 The containers contain the following software:
 
