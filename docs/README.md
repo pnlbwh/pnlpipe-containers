@@ -22,7 +22,20 @@ Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-mark
 
 # Background
 
-If you are new to the container concept, it can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0.
+If you are new to the container concept, it can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0. In any case, your system needs the following capabilities to run containers: 
+
+#### Single machine
+
+- 4 cores, 16G RAM, ability to run docker or singularity, 50G for the container image
+- 20G/case of storage space.
+- Running the full pipeline on one case takes X hours (Y hours for structural masking+freesurfer, Z hours for dMRI masking+artifact correction+ukf+white matter analysis).
+ 
+
+#### Distributed environment:
+
+- A Linux cluster with a job scheduler (LSF or SLURM)
+- The ability for each compute node to run docker or singularity containers
+- 20G/case of network attached storage
 
 # pnlpipe containers
 
