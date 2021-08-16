@@ -22,8 +22,6 @@ Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-mark
 
 # pnlpipe containers
 
-The *pnlpipe* docker container is publicly hosted at [https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe](https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe)
-
 It can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0
 
 This repository provides recipes for building [*pnlpipe* software](https://github.com/pnlbwh/pnlpipe_software) containers.
@@ -59,6 +57,18 @@ locally and mount into this image:
 
 ## Docker
 
+(i) The *pnlpipe* docker container is publicly hosted at [https://hub.docker.com/r/tbillah/pnlpipe](https://hub.docker.com/r/tbillah/pnlpipe).
+You can get it by:
+
+    docker pull tbillah/pnlpipe
+    
+Instead of Docker Hub, you can also download the container from our Dropbox:
+
+    wget https://www.dropbox.com/s/hfkyxvu9hvahumb/pnlpipe.tar.gz
+
+
+(ii) Process your data:
+
     docker run --rm -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
     -v /host/path/to/myData:/home/pnlbwh/myData \
     -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
@@ -68,12 +78,6 @@ locally and mount into this image:
 * Please make sure to enclose your command within double quotes--`"nifti_atlas ..."`.
 * `-v /host/path/to/myData:/home/pnlbwh/data` is for mounting your data into the container so you can analyze.
 * If you would like an interactive shell into the container, use `docker run --rm -ti ...` and omit the command in `" "`.
-
-
-**NOTE** Instead of Docker Hub, you can also download the Docker image from our Dropbox:
-
-    wget https://www.dropbox.com/s/hfkyxvu9hvahumb/pnlpipe.tar.gz
-
 
 
 ## Singularity
