@@ -26,16 +26,20 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 
 #### Single machine
 
-- 4 cores, 16G RAM, ability to run docker or singularity, 50G for the container image
-- 20G/case of storage space.
-- Running the full pipeline on one case takes X hours (Y hours for structural masking+freesurfer, Z hours for dMRI masking+artifact correction+ukf+white matter analysis).
- 
+- Examples are your personal laptop or lab workstation
+- Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
+- 4 cores, 16 GB RAM, 30 GB disk space for each container image
+- 10 GB/subject disk space
 
 #### Distributed environment:
 
 - A Linux cluster with a job scheduler (LSF or SLURM)
-- The ability for each compute node to run docker or singularity containers
-- 20G/case of network attached storage
+- Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
+- Core, RAM, and disk space are usually abundant in a cluster but you would need at least the requirement of a single machine
+- 10 GB/subject disk space, either physical or mounted to the node where job is run
+
+Time profile of various tasks of *pnlpipe* can be found [here]().
+
 
 # pnlpipe containers
 
