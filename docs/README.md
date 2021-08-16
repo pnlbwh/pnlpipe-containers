@@ -20,9 +20,11 @@ Table of contents
 Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 
-# pnlpipe containers
+# Background
 
-It can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0
+If you are new to the container concept, it can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0.
+
+# pnlpipe containers
 
 This repository provides recipes for building [*pnlpipe* software](https://github.com/pnlbwh/pnlpipe_software) containers.
 The containers contain the following software:
