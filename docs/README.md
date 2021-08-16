@@ -37,8 +37,9 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 - Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
   <details><summary>Note</summary>
   Because of the risk involved with sudo, shared clusters usually have Singularity only. But your cluster admin may also create
-an isolated VM (virtual machine) for you with sudo privileges where you can run Docker.
+  an isolated VM (virtual machine) for you with sudo privileges where you can run Docker.
   </details>
+
 - Core, RAM, and disk space are usually abundant in a cluster but you would need at least the requirement of a single machine
 - 10 GB/subject disk space, either physical or mounted to the node where job is run
 
