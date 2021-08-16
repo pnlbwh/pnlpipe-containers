@@ -35,6 +35,8 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 
 - A Linux cluster with a job scheduler (LSF or SLURM)
 - Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
+  Because of the risk involved with sudo, shared clusters usually have Singularity only. But your cluster admin may also create
+  an isolated virtual machine (VM) for you with sudo privileges where you can run Docker.
   <details><summary>Note</summary>
   Because of the risk involved with sudo, shared clusters usually have Singularity only. But your cluster admin may also create
   an isolated virtual machine (VM) for you with sudo privileges where you can run Docker.
