@@ -48,7 +48,7 @@ Time profile of various tasks of *pnlpipe* is given below:
 | Task                            | Estimated time hour/subject   |
 |---------------------------------|-------------------------------|
 | T1/T2 MABS<sup>~</sup> masking  | 1.5                           |
-| FreeSurfer segmentation         | 6 (1mm3) 9 (high resolution)  |
+| FreeSurfer segmentation         | 6 (1mm<sup>3</sup>), 9 (high resolution)  |
 | DWI Gibb's unringing            | 0.5                           |
 | DWI CNN masking                 | 0.25                          |
 | FSL eddy correction             | 2                             |
@@ -60,6 +60,14 @@ Time profile of various tasks of *pnlpipe* is given below:
 | FreeSurfer to DWI               | 1.5                           |
 
 <sup>~</sup>MABS: Multi Atlas Brain Segmentation
+
+If we add the times, total duration per subject for various pipelines would be:
+
+| Pipeline | Total time hour/subject |
+|--|--|
+| [Structural](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#structural) | ~10 |
+| [Diffusion](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#diffusion) | ~7 (FSL eddy+epi), ~2 (PNL eddy+epi) |
+| [Tractography](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#tractography) | ~5 |
 
 # pnlpipe containers
 
