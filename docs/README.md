@@ -59,7 +59,7 @@ Time profile of various tasks of *pnlpipe* is given below:
 | White matter analysis           | 1.5                           |
 | FreeSurfer to DWI               | 1.5                           |
 
-<sup>~</sup> MABS: Multi Atlas Brain Segmentation
+<sup>~</sup>MABS: Multi Atlas Brain Segmentation
 
 # pnlpipe containers
 
