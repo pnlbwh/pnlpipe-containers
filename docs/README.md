@@ -22,7 +22,9 @@ Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-mark
 
 # Background
 
-If you are new to the container concept, it can be resourceful to see Tashrif's [presentation](https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0) on containers. In any case, your system needs the following capabilities to run containers: 
+If you are new to the container concept, it can be resourceful to see Tashrif's [presentation](https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0) on containers. In any case, your system needs the following capabilities to run containers.
+
+## System requirement
 
 #### Single machine
 
@@ -31,7 +33,7 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 - 4 cores, 16 GB RAM, 30 GB disk space for each container image
 - 10 GB/subject disk space
 
-#### Distributed environment:
+#### Distributed environment
 
 - A Linux cluster with a job scheduler (LSF or SLURM)
 - Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
@@ -41,7 +43,7 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 - 10 GB/subject disk space, either physical or mounted to the node where job is run
 
 
-#### Time profile
+## Time profile
 
 Time profile of various tasks of *pnlpipe* is given below:
 
@@ -72,6 +74,7 @@ If we add the times, total duration per subject for various pipelines would be:
 
 Job execution nodes in a cluster managed by LSF or SLURM are usually time-constrainted. For running our pipelines,
 you must choose such nodes/queues that allow at least as much runtime as above.
+
 
 # pnlpipe containers
 
