@@ -63,7 +63,7 @@ Time profile of various tasks of *pnlpipe* is given below:
 
 If we add the times, total duration per subject for various pipelines would be:
 
-| Pipeline | Total time hour/subject |
+| Pipeline | Estimated total hour/subject |
 |--|--|
 | [Structural](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#structural) | ~10 |
 | [Diffusion](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#diffusion) | ~7 (FSL eddy+epi), ~2 (PNL eddy+epi) |
