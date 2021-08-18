@@ -68,6 +68,10 @@ If we add the times, total duration per subject for various pipelines would be:
 | [Structural](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#structural) | ~10 |
 | [Diffusion](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#diffusion) | ~7 (FSL eddy+epi), ~2 (PNL eddy+epi) |
 | [Tractography](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#tractography) | ~5 |
+| Total | ~22 |
+
+Job execution nodes in a cluster managed by LSF or SLURM are usually time-constrainted. For running our pipelines,
+you must choose such nodes/queues that allow at least as much runtime as above.
 
 # pnlpipe containers
 
