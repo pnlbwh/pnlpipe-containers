@@ -8,13 +8,21 @@ Developed by Tashrif Billah and Sylvain Bouix, Brigham and Women's Hospital (Har
 Table of contents
 =================
 
+   * [Background](#background)
+      * [System requirement](#system-requirement)
+            * [Single machine](#single-machine)
+            * [Distributed environment](#distributed-environment)
+      * [Time profile](#time-profile)
    * [pnlpipe containers](#pnlpipe-containers)
       * [Docker](#docker)
       * [Singularity](#singularity)
+   * [Programs](#programs)
    * [Citation](#citation)
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
    * [Appendix](#appendix)
+         * [Cmake installation](#cmake-installation)
+         * [ANTs from source](#ants-from-source)
 
 
 Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
