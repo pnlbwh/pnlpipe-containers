@@ -40,7 +40,24 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 - Core, RAM, and disk space are usually abundant in a cluster but you would need at least the requirement of a single machine
 - 10 GB/subject disk space, either physical or mounted to the node where job is run
 
-Time profile of various tasks of *pnlpipe* can be found [here]().
+
+#### Time profile
+
+Time profile of various tasks of *pnlpipe* is given below:
+
+| Task                            | Estimated time (hour)/subject |
+|---------------------------------|-------------------------------|
+| T1/T2 MABS<sup>~</sup> masking  | 1.5                           |
+| Gibb's unringing                | 0.5                           |
+| FreeSurfer segmentation         | 6 (1mm3) 9 (high resolution)  |
+| DWI CNN masking                 | 0.1                           |
+| FSL eddy correction             | 2                             |
+| FSL epi (topup+eddy) correction | 2.5                           |
+| UKF tractography                | 2                             |
+| White matter analysis           | 1.5                           |
+| PNL eddy correction             | 0.5                           |
+| PNL epi correction              | 0.5                           |
+| FreeSurfer to DWI               | 1.5                           |
 
 
 # pnlpipe containers
