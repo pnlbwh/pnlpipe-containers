@@ -45,20 +45,21 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 
 Time profile of various tasks of *pnlpipe* is given below:
 
-| Task                            | Estimated time (hour)/subject |
+| Task                            | Estimated time hour/subject   |
 |---------------------------------|-------------------------------|
 | T1/T2 MABS<sup>~</sup> masking  | 1.5                           |
-| Gibb's unringing                | 0.5                           |
 | FreeSurfer segmentation         | 6 (1mm3) 9 (high resolution)  |
-| DWI CNN masking                 | 0.1                           |
+| DWI Gibb's unringing            | 0.5                           |
+| DWI CNN masking                 | 0.25                          |
 | FSL eddy correction             | 2                             |
 | FSL epi (topup+eddy) correction | 2.5                           |
-| UKF tractography                | 2                             |
-| White matter analysis           | 1.5                           |
 | PNL eddy correction             | 0.5                           |
 | PNL epi correction              | 0.5                           |
+| UKF tractography                | 2                             |
+| White matter analysis           | 1.5                           |
 | FreeSurfer to DWI               | 1.5                           |
 
+<sup>~</sup> MABS: Multi Atlas Brain Segmentation
 
 # pnlpipe containers
 
