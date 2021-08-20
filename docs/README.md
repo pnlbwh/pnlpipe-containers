@@ -17,6 +17,7 @@ Table of contents
       * [Docker](#docker)
       * [Singularity](#singularity)
    * [Programs](#programs)
+   * [Luigi tasks](#luigi-tasks)
    * [Citation](#citation)
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
@@ -56,7 +57,7 @@ Time profile of various tasks of *pnlpipe* is given below:
 | Task                            | Estimated time hour/subject   |
 |---------------------------------|-------------------------------|
 | T1/T2 MABS<sup>~</sup> masking  | 1.5                           |
-| FreeSurfer segmentation         | 6 (1mm<sup>3</sup>), 9 (high resolution)  |
+| FreeSurfer segmentation         | 6 (1mm<sup>3</sup>), 9 (high resolution) |
 | DWI Gibb's unringing            | 0.5                           |
 | DWI CNN masking                 | 0.25                          |
 | FSL eddy correction             | 2                             |
@@ -175,7 +176,23 @@ You may learn more about them in the corresponding tutorials:
 
 *pnlpipe*   https://github.com/pnlbwh/pnlpipe
 
+
+# Luigi tasks
+
+Now you can run [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe) inside our containers leveraging on PNL hosted public Luigi server.
+To be able to do so, obtain login credentials as noted [here]https://github.com/pnlbwh/luigi-pnlpipe/blob/hcp/docs/README.md#use-pnl-public-server)
+and pass them to containers as follows:
+
+    # Docker container
+    docker run --rm -ti \
+    --env LUIGI_USERNAME=hello --env LUIGI_PASSWORD=world ...
     
+    # Singularity container
+    singularity shell \
+    --env LUIGI_USERNAME=hello --env LUIGI_PASSWORD=world ...
+
+You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
+
 
 # Citation
 
