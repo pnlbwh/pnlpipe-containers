@@ -180,7 +180,7 @@ You may learn more about them in the corresponding tutorials:
 # Luigi tasks
 
 Now you can run [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe) inside our containers leveraging on PNL hosted public Luigi server.
-To be able to do so, obtain login credentials as noted [here]https://github.com/pnlbwh/luigi-pnlpipe/blob/hcp/docs/README.md#use-pnl-public-server)
+To be able to do so, obtain login credentials as noted [here](https://github.com/pnlbwh/luigi-pnlpipe/blob/hcp/docs/README.md#use-pnl-public-server)
 and pass them to containers as follows:
 
     # Docker container
