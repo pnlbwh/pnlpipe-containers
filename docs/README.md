@@ -8,9 +8,16 @@ Developed by Tashrif Billah and Sylvain Bouix, Brigham and Women's Hospital (Har
 Table of contents
 =================
 
+   * [Background](#background)
+      * [System requirement](#system-requirement)      
+          * [Single machine](#single-machine)
+          * [Distributed environment](#distributed-environment)            
+      * [Time profile](#time-profile)
    * [pnlpipe containers](#pnlpipe-containers)
       * [Docker](#docker)
       * [Singularity](#singularity)
+   * [Programs](#programs)
+   * [Luigi tasks](#luigi-tasks)
    * [Citation](#citation)
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
@@ -20,11 +27,65 @@ Table of contents
 Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
 
+# Background
+
+If you are new to the container concept, it can be resourceful to see Tashrif's [presentation](https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0) on containers. In any case, your system needs the following capabilities to run containers.
+
+## System requirement
+
+#### Single machine
+
+- Examples are your personal laptop or lab workstation
+- Docker or Singularity, whichever you use, must be installed.
+  Running Docker conventionally requires administrative/sudo (root) privileges.
+  But you may be able to run Docker in [rootless](https://docs.docker.com/engine/security/rootless/) mode.
+- 4 cores, 16 GB RAM, 30 GB disk space for each container image
+- 10 GB/subject disk space
+
+#### Distributed environment
+
+- A Linux cluster with a job scheduler (LSF or SLURM)
+- Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
+  Because of the risk involved with sudo, shared clusters usually have Singularity only. But your cluster admin may also create
+  an isolated virtual machine (VM) for you with sudo privileges where you can run Docker.
+- Core, RAM, and disk space are usually abundant in a cluster but you would need at least the requirement of a single machine
+- 10 GB/subject disk space, either physical or mounted to the node where job is run
+
+
+## Time profile
+
+Time profile of various tasks of *pnlpipe* is given below:
+
+| Task                            | Estimated time hour/subject   |
+|---------------------------------|-------------------------------|
+| T1/T2 MABS<sup>~</sup> masking  | 1.5                           |
+| FreeSurfer segmentation         | 6 (1mm<sup>3</sup>), 9 (high resolution) |
+| DWI Gibb's unringing            | 0.5                           |
+| DWI CNN masking                 | 0.25                          |
+| FSL eddy correction             | 2                             |
+| FSL epi (topup+eddy) correction | 2.5                           |
+| PNL eddy correction             | 0.5                           |
+| PNL epi correction              | 0.5                           |
+| UKF tractography                | 2                             |
+| White matter analysis           | 1.5                           |
+| FreeSurfer to DWI               | 1.5                           |
+
+<sup>~</sup>MABS: Multi Atlas Brain Segmentation
+
+If we add the times, total duration per subject for various pipelines would be:
+
+| Pipeline | Estimated total hour/subject |
+|--|--|
+| [Structural](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#structural) | 10 |
+| [Diffusion](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#diffusion) | 7 (FSL eddy+epi), 2 (PNL eddy+epi) |
+| [Tractography](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#tractography) | 5 |
+| Total | 22 |
+
+Job execution nodes in a cluster managed by LSF or SLURM are usually time-constrainted. For running our pipelines,
+you must choose such nodes/queues that allow at least as much runtime as above.
+
+
 # pnlpipe containers
-
-The *pnlpipe* docker container is publicly hosted at [https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe](https://cloud.docker.com/u/tbillah/repository/docker/tbillah/pnlpipe)
-
-It can be resourceful to see Tashrif's presentation on containers at https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0
 
 This repository provides recipes for building [*pnlpipe* software](https://github.com/pnlbwh/pnlpipe_software) containers.
 The containers contain the following software:
@@ -59,6 +120,18 @@ locally and mount into this image:
 
 ## Docker
 
+(i) The *pnlpipe* docker container is publicly hosted at [https://hub.docker.com/r/tbillah/pnlpipe](https://hub.docker.com/r/tbillah/pnlpipe).
+You can get it by:
+
+    docker pull tbillah/pnlpipe
+    
+Instead of Docker Hub, you can also download the container from our Dropbox:
+
+    wget https://www.dropbox.com/s/hfkyxvu9hvahumb/pnlpipe.tar.gz
+
+
+(ii) Process your data:
+
     docker run --rm -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
     -v /host/path/to/myData:/home/pnlbwh/myData \
     -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
@@ -68,12 +141,6 @@ locally and mount into this image:
 * Please make sure to enclose your command within double quotes--`"nifti_atlas ..."`.
 * `-v /host/path/to/myData:/home/pnlbwh/data` is for mounting your data into the container so you can analyze.
 * If you would like an interactive shell into the container, use `docker run --rm -ti ...` and omit the command in `" "`.
-
-
-**NOTE** Instead of Docker Hub, you can also download the Docker image from our Dropbox:
-
-    wget https://www.dropbox.com/s/hfkyxvu9hvahumb/pnlpipe.tar.gz
-
 
 
 ## Singularity
@@ -111,7 +178,23 @@ You may learn more about them in the corresponding tutorials:
 
 *pnlpipe*   https://github.com/pnlbwh/pnlpipe
 
+
+# Luigi tasks
+
+Now you can run [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe) inside our containers leveraging on PNL hosted public Luigi server.
+To be able to do so, obtain login credentials as noted [here](https://github.com/pnlbwh/luigi-pnlpipe/blob/hcp/docs/README.md#use-pnl-public-server)
+and pass them to containers as follows:
+
+    # Docker container
+    docker run --rm -ti \
+    --env LUIGI_USERNAME=hello --env LUIGI_PASSWORD=world ...
     
+    # Singularity container
+    singularity shell \
+    --env LUIGI_USERNAME=hello --env LUIGI_PASSWORD=world ...
+
+You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
+
 
 # Citation
 
