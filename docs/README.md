@@ -36,7 +36,9 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 #### Single machine
 
 - Examples are your personal laptop or lab workstation
-- Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
+- Docker or Singularity, whichever you use, must be installed.
+  Running Docker conventionally requires administrative/sudo (root) privileges.
+  But you may be able to run Docker in [rootless](https://docs.docker.com/engine/security/rootless/) mode.
 - 4 cores, 16 GB RAM, 30 GB disk space for each container image
 - 10 GB/subject disk space
 
