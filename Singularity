@@ -18,9 +18,14 @@ From: redhat/ubi9:9.5-1738643550
     export HOME=`pwd`
     #
     # install required libraries
-    yum -y install wget file bzip2 which vim git make unzip libstdc++-static mesa-libGL bc tcsh libSM \
-    gcc-c++ openssl-devel libX11-devel && \
-    yum clean all && \
+    yum -y install wget file bzip2 which vim git make unzip libstdc++-static mesa-libGL bc libSM \
+    gcc-c++ openssl-devel libX11-devel
+    
+    TCSH=tcsh-6.22.03-6.el9.x86_64.rpm
+    wget https://dl.rockylinux.org/pub/rocky/9/devel/x86_64/os/Packages/t/$TCSH
+    rpm -ivh $TCSH
+    
+    yum clean all
     #
     # install Cmake
     CMAKE=3.31.0 && \
@@ -28,6 +33,7 @@ From: redhat/ubi9:9.5-1738643550
     tar -xzf cmake-${CMAKE}.tar.gz && \
     cd cmake-${CMAKE} && mkdir build && cd build && \
     ../bootstrap --parallel=4 && make -j4
+    cd
     #
     # install dcm2niix
     git clone https://github.com/rordenlab/dcm2niix.git && \
@@ -93,6 +99,18 @@ From: redhat/ubi9:9.5-1738643550
         wget https://zenodo.org/record/2540695/files/${i}.model
     done
     cd
+    #
+    # whitematteranalysis
+    conda create -y -n wma python=3.9 -c conda-forge --override-channel
+    conda activate wma
+    pip install git+https://github.com/SlicerDMRI/whitematteranalysis.git
+    #
+    git clone https://github.com/demianw/tract_querier.git
+    cd tract_querier
+    python setup.py install
+    export PATH=`pwd`/scripts:$PATH
+    pip install plumbum
+    conda deactivate
     #
     # install FSL
     echo "Downloading FSL installer" && \
