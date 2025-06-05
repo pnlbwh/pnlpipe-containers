@@ -9,6 +9,9 @@ From: redhat/ubi9:9.5-1738643550
 
     Please report issues on GitHub.
 
+%files
+
+    bin/* /usr/bin/
 
 %post
     #
@@ -19,7 +22,7 @@ From: redhat/ubi9:9.5-1738643550
     #
     # install required libraries
     yum -y install wget file bzip2 which vim git make unzip libstdc++-static mesa-libGL bc libSM \
-    gcc-c++ openssl-devel libX11-devel
+    gcc-c++ openssl-devel libX11-devel libXrender
     
     TCSH=tcsh-6.22.03-6.el9.x86_64.rpm
     wget https://dl.rockylinux.org/pub/rocky/9/devel/x86_64/os/Packages/t/$TCSH
@@ -107,8 +110,7 @@ From: redhat/ubi9:9.5-1738643550
     #
     git clone https://github.com/demianw/tract_querier.git
     cd tract_querier
-    python setup.py install
-    export PATH=`pwd`/scripts:$PATH
+    pip install .
     pip install plumbum
     conda deactivate
     #
@@ -118,6 +120,9 @@ From: redhat/ubi9:9.5-1738643550
     echo "Installing FSL" && \
     V=6.0.7 && \
     python fslinstaller.py -V $V -d $HOME/fsl-$V > /dev/null && \
+    cd $HOME/fsl-$V/share/fsl/bin
+    ln -s eddy_cuda10.2 eddy_cuda
+    cd
     # setup FSL environment
     export FSLDIR=$HOME/fsl-$V && \
     rm -f fslinstaller.py && \
@@ -173,6 +178,6 @@ From: redhat/ubi9:9.5-1738643550
     #
     PATH=$ROOT/miniconda3/envs/pnlpipe9/bin:$PATH
     #
-    export PATH
+    export PATH ROOT
 
 
