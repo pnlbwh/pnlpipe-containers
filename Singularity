@@ -5,7 +5,7 @@ From: redhat/ubi9:9.5-1738643550
     MAINTAINER Tashrif Billah <tbillah@bwh.harvard.edu>
 
 %help
-    https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation 
+    https://github.com/pnlbwh/pnlpipe-containers
 
     Please report issues on GitHub.
 
