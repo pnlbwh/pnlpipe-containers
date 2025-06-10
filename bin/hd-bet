@@ -1,0 +1,4 @@
+#!/bin/bash
+
+${ROOT}/miniconda3/envs/hd-bet/bin/hd-bet $@
+
