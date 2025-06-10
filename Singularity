@@ -176,7 +176,9 @@ From: redhat/ubi9:9.5-1738643550
     #
     export PYTHONPATH=$ROOT/luigi-pnlpipe
     #
-    PATH=$ROOT/miniconda3/envs/pnlpipe9/bin:$PATH
+    PATH=$ROOT/miniconda3/envs/pnlpipe9/bin:$ROOT/miniconda3/condabin:$PATH
+    #
+    PATH=$ROOT/pnlNipype/scripts:$PATH
     #
     export PATH ROOT
 
