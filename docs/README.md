@@ -176,8 +176,6 @@ You may learn more about them in the corresponding tutorials:
 
 *pnlNipype* https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md
 
-*pnlpipe*   https://github.com/pnlbwh/pnlpipe
-
 
 # Luigi tasks
 
@@ -208,11 +206,12 @@ https://github.com/pnlbwh/pnlpipe, 2018, DOI: 10.5281/zenodo.2584271
 
 Once inside the container, you can test its functionality with:
 
-> atlas.py --help
+> align.py --help
 
 > UKFTractography --help
 
-> DWIConvert --help
+> antsRegistration --help
+
 
 
 The above should print corresponding help messages without any error.
