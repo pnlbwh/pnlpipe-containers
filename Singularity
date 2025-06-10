@@ -114,6 +114,9 @@ From: redhat/ubi9:9.5-1738643550
     pip install plumbum
     conda deactivate
     #
+    # avoid git dubious ownership error
+    git config --system --add safe.directory '*'
+    #
     # install FSL
     echo "Downloading FSL installer" && \
     wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py -O fslinstaller.py > /dev/null 2>&1 && \
