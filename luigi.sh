@@ -24,9 +24,13 @@ then
     git clone https://github.com/pnlbwh/luigi-pnlpipe.git
 fi
 
-cd luigi-pnlpipe
-mkdir -p luigi-server
-luigid --logdir luigi-server --background
+# check if it is already running
+if [ -z `fuser 8082/tcp` ]
+then
+    cd luigi-pnlpipe
+    mkdir -p luigi-server
+    luigid --logdir luigi-server --background
+fi
 
 # confirm launch at http://localhost:8082
 
