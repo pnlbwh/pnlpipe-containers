@@ -77,6 +77,7 @@ From: redhat/ubi9:9.5-1738643550
     #
     # CNN-Diffusion-MRIBrain-Segmentation
     git clone https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation.git && \
+    cd CNN-Diffusion-MRIBrain-Segmentation.git && \
     wget https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/releases/download/v0.3/model_folder.tar.gz && \
     tar -xzvf model_folder.tar.gz && rm -f model_folder.tar.gz && \
     conda create -y -n dmri_seg python=3.11 -c conda-forge --override-channels && \
@@ -84,6 +85,7 @@ From: redhat/ubi9:9.5-1738643550
     pip install 'tensorflow[and-cuda]==2.15.1' && \
     pip install scikit-image git+https://github.com/pnlbwh/conversion.git && \
     conda deactivate
+    cd
     #
     # HD-BET
     conda create -y -n hd-bet python=3.9 -c conda-forge --override-channels
