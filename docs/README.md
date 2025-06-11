@@ -24,9 +24,6 @@ Table of contents
    * [Appendix](#appendix)
 
 
-Table of Contents created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
-
-
 # Background
 
 If you are new to the container concept, it can be resourceful to see Tashrif's [presentation](https://www.dropbox.com/s/nmpnto459yus3lg/031521-Containers-Part-2.pptx?dl=0) on containers. In any case, your system needs the following capabilities to run containers.
