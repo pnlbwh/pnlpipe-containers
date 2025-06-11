@@ -30,6 +30,8 @@ then
     cd luigi-pnlpipe
     mkdir -p luigi-server
     luigid --logdir luigi-server --background
+else
+    echo Luigi server is already running at http://localhost:8082
 fi
 
 # confirm launch at http://localhost:8082
