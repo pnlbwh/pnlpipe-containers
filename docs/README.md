@@ -179,17 +179,23 @@ You may learn more about them in the corresponding tutorials:
 
 # Luigi tasks
 
-Now you can run [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe) inside our containers leveraging on PNL hosted public Luigi server.
-To be able to do so, obtain login credentials as noted [here](https://github.com/pnlbwh/luigi-pnlpipe/blob/hcp/docs/README.md#use-pnl-public-server)
-and pass them to containers as follows:
+Now you can run [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe) inside our containers leveraging your own Luigi server.
+To be able to do so, launch Luigi server in your host computer:
+
+    git clone https://github.com/pnlbwh/pnlpipe-containers.git
+    cd pnlpipe-containers
+    ./luigi.sh
+
+Visit http://localhost:8082 in your browser to confirm that you have successfully launched the server.
+Now shell into the containers and run programs from the interactive shells:
 
     # Docker container
     docker run --rm -ti \
-    --env LUIGI_USERNAME=hello --env LUIGI_PASSWORD=world ...
+    ...
     
     # Singularity container
     singularity shell \
-    --env LUIGI_USERNAME=hello --env LUIGI_PASSWORD=world ...
+    ...
 
 You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
 
