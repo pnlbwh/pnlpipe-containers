@@ -84,23 +84,21 @@ you must choose such nodes/queues that allow at least as much runtime as above.
 
 # pnlpipe containers
 
-This repository provides recipes for building [*pnlpipe* software](https://github.com/pnlbwh/pnlpipe_software) containers.
-The containers contain the following software:
+This repository provides recipes for building [*pnlpipe*](https://github.com/pnlbwh/pnlNipype) containers.
+The containers include the following software:
 
-* Python=3.6
-* ANTs=2.3.0
-* BRAINSTools
+* Python
+* ANTs
 * UKFTractography
+* unu
 * tract_querier
 * dcm2niix
-* trainingDataT1AHCC
-* trainingDataT2Masks
 * whitematteranalysis
 
 *pnlpipe* pipeline depends on two other software, installation of which requires you to agree to their license terms:
 
-* [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) 7.1.0
-* [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation) 6.0.1
+* [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) 7.4.1
+* [FSL](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/FslInstallation) 6.0.7
 
 They are already installed in the *tbillah/pnlpipe* docker image. Befor using the image, you should review their 
 respective licenses. A salient clause of FSL license states it is not free for commercial use. 
@@ -129,7 +127,7 @@ Instead of Docker Hub, you can also download the container from our Dropbox:
 
 (ii) Process your data:
 
-    docker run --rm -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
+    docker run --rm -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.4.1/license.txt \
     -v /host/path/to/myData:/home/pnlbwh/myData \
     -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
     tbillah/pnlpipe \
@@ -151,7 +149,7 @@ Because of limited storage quota, it could not be hosted in https://cloud.sylabs
 
 (ii) Process your data:
 
-    singularity run --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.1.0/license.txt \
+    singularity run --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.4.1/license.txt \
     --bind /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
     --bind /host/path/to/myData:/home/pnlbwh/myData \
     pnlpipe.sif \
