@@ -198,8 +198,7 @@ You may need to edit Luigi configuration files before running *luigi-pnlpipe* ta
 
 If *pipeline* containers are useful in your research, please cite as below:
 
-Billah, Tashrif*; Eckbo, Ryan*; Bouix, Sylvain; Norton, Isaiah; Processing pipeline for anatomical and diffusion weighted images, 
-https://github.com/pnlbwh/pnlpipe, 2018, DOI: 10.5281/zenodo.2584271
+Billah, Tashrif; Bouix, Sylvain; Rathi, Yogesh; NIFTI MRI processing pipeline, https://github.com/pnlbwh/pnlNipype, 2019, DOI: 10.5281/zenodo.3258854
 
 
 # Tests
