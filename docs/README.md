@@ -132,7 +132,7 @@ Instead of Docker Hub, you can also download the container from our Dropbox:
     -v /host/path/to/myData:/home/pnlbwh/myData \
     -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
     tbillah/pnlpipe \
-    "nifti_atlas -t /home/pnlbwh/myData/t1w.nii.gz -o /home/pnlbwh/myData/t1Mask --train /home/pnlbwh/myData/yourTrainingT1Masks.csv"
+    "dwi_masking.py -i /home/pnlbwh/myData/imagelist.txt -f /home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder"
 
 * Please make sure to enclose your command within double quotes--`"nifti_atlas ..."`.
 * `-v /host/path/to/myData:/home/pnlbwh/data` is for mounting your data into the container so you can analyze.
