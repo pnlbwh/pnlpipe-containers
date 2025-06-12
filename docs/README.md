@@ -185,13 +185,37 @@ To be able to do so, launch Luigi server in your host computer:
 Visit http://localhost:8082 in your browser to confirm that you have successfully launched the server.
 Now shell into the containers and run programs from the interactive shells:
 
-    # Docker container
+    # Launch Docker container
     docker run --rm -ti \
-    ...
-    
-    # Singularity container
+    -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.4.1/license.txt \
+    -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
+    -v /host/path/to/myData:/home/pnlbwh/myData \
+    tbillah/pnlpipe
+
+    # Inside the container
+    cd /home/pnlbwh
+    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/hcp/struct_pipe_params.cfg
+    luigi-pnlpipe/workflows/ExecuteTask.py -c 1001 -s 1 --t1-template sub-*/ses-*/anat/*_T1w.nii.gz --task StructMask \
+    --bids-data-dir /home/pnlbwh/myData/rawdata
+
+
+---
+
+
+    # Launch Singularity container
     singularity shell \
-    ...
+    --nv \
+    --bind /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.4.1/license.txt \
+    --bind /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
+    --bind /host/path/to/myData:/home/pnlbwh/myData \
+    pnlpipe.sif
+    
+    # Inside the container
+    cd /home/pnlbwh
+    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/hcp/struct_pipe_params.cfg
+    luigi-pnlpipe/workflows/ExecuteTask.py -c 1001 -s 1 --t1-template sub-*/ses-*/anat/*_T1w.nii.gz --task StructMask \
+    --bids-data-dir /home/pnlbwh/myData/rawdata
+
 
 You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
 
