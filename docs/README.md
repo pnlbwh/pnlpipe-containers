@@ -134,7 +134,7 @@ Instead of Docker Hub, you can also download the container from our Dropbox:
     tbillah/pnlpipe \
     "dwi_masking.py -i /home/pnlbwh/myData/imagelist.txt -f /home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder"
 
-* Please make sure to enclose your command within double quotes--`"nifti_atlas ..."`.
+* Please make sure to enclose your command within double quotes--`"dwi_masking.py ..."`.
 * `-v /host/path/to/myData:/home/pnlbwh/data` is for mounting your data into the container so you can analyze.
 * If you would like an interactive shell into the container, use `docker run --rm -ti ...` and omit the command in `" "`.
 
@@ -154,7 +154,7 @@ Because of limited storage quota, it could not be hosted in https://cloud.sylabs
     --bind /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
     --bind /host/path/to/myData:/home/pnlbwh/myData \
     pnlpipe.sif \
-    nifti_atlas -t /home/pnlbwh/myData/t1w.nii.gz -o /home/pnlbwh/myData/t1Mask --train /home/pnlbwh/myData/yourTrainingT1Masks.csv
+    dwi_masking.py -i /home/pnlbwh/myData/imagelist.txt -f /home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder
 
 * Notice that you do NOT need to enclose your command within double quotes.
 * `--bind` is for mounting your data into the container so you can analyze. Singularity mounts `$HOME` directory by default. 
