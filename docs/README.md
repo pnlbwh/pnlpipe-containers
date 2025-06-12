@@ -41,31 +41,32 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 
 #### Distributed environment
 
-- A Linux cluster with a job scheduler (LSF or SLURM)
+- A Linux cluster with a job scheduler (LSF or SLURM).
 - Docker or Singularity, whichever you use, must be installed. Running Docker requires administrative (sudo) privileges.
   Because of the risk involved with sudo, shared clusters usually have Singularity only. But your cluster admin may also create
   an isolated virtual machine (VM) for you with sudo privileges where you can run Docker.
-- Core, RAM, and disk space are usually abundant in a cluster but you would need at least the requirement of a single machine
-- 10 GB/subject disk space, either physical or mounted to the node where job is run
+- Core, RAM, and disk space are usually abundant in a cluster. But you would need at least
+  10 GB/subject disk space, either physical or mounted to the node where job is run.
 
 
 ## Time profile
 
 Time profile of various tasks of *pnlpipe* is given below:
 
-| Task                            | Estimated time hour/subject   |
-|---------------------------------|-------------------------------|
-| T1/T2 MABS<sup>~</sup> masking  | 1.5                           |
-| FreeSurfer segmentation         | 6 (1mm<sup>3</sup>), 9 (high resolution) |
-| DWI Gibb's unringing            | 0.5                           |
-| DWI CNN masking                 | 0.25                          |
-| FSL eddy correction             | 2                             |
-| FSL epi (topup+eddy) correction | 2.5                           |
-| PNL eddy correction             | 0.5                           |
-| PNL epi correction              | 0.5                           |
-| UKF tractography                | 2                             |
-| White matter analysis           | 1.5                           |
-| FreeSurfer to DWI               | 1.5                           |
+| Task                                     | Estimated time hour/subject              |
+|------------------------------------------|------------------------------------------|
+| T1/T2 MABS<sup>~</sup> masking           | 1.5                                      |
+| T1/T2 HD-BET masking                     | 0.1                                      |
+| FreeSurfer segmentation                  | 6 (1mm<sup>3</sup>), 9 (high resolution) |
+| DWI Gibb's unringing                     | 0.5                                      |
+| DWI CNN masking                          | 0.25                                     |
+| FSL eddy correction                      | 2                                        |
+| FSL HCP Pipeline (topup+eddy) correction | 4                                        |
+| PNL eddy correction                      | 0.5                                      |
+| PNL epi correction                       | 0.5                                      |
+| UKF tractography                         | 2                                        |
+| White matter analysis                    | 1.5                                      |
+| FreeSurfer to DWI                        | 1.5                                      |
 
 <sup>~</sup>MABS: Multi Atlas Brain Segmentation
 
@@ -74,7 +75,7 @@ If we add the times, total duration per subject for various pipelines would be:
 | Pipeline | Estimated total hour/subject |
 |--|--|
 | [Structural](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#structural) | 10 |
-| [Diffusion](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#diffusion) | 7 (FSL eddy+epi), 2 (PNL eddy+epi) |
+| [Diffusion](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#diffusion) | 7 (FSL HCP Pipeline), 2 (PNL eddy+epi) |
 | [Tractography](https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md#tractography) | 5 |
 | Total | 22 |
 
