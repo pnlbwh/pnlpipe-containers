@@ -22,7 +22,7 @@ From: redhat/ubi9:9.5-1738643550
     #
     # install required libraries
     yum -y install wget file bzip2 which vim git make unzip libstdc++-static mesa-libGL bc libSM \
-    gcc-c++ openssl-devel libX11-devel libXrender libxcrypt-compat libgfortran hostname
+    gcc-c++ openssl-devel libX11-devel libXrender libxcrypt-compat libgfortran hostname libXt
     
     TCSH=tcsh-6.22.03-6.el9.x86_64.rpm
     wget https://dl.rockylinux.org/pub/rocky/9/devel/x86_64/os/Packages/t/$TCSH
