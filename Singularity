@@ -147,10 +147,13 @@ From: redhat/ubi9:9.5-1738643550
     fs_install_mcr R2019b
     #
     # clean up
-    rm -rf $HOME/.cache/pip/ $HOME/Miniconda3-latest-Linux-x86_64.sh
+    cd
     conda deactivate
-    source $HOME/miniconda3/bin/activate
+    source miniconda3/bin/activate
     conda clean -y --all
+    rm -rf .cache/pip/ Miniconda3-latest-Linux-x86_64.sh \
+    cmake-3.31.0.tar.gz tcsh-6.22.03-6.el9.x86_64.rpm
+
     
     
 %environment
