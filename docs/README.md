@@ -89,11 +89,11 @@ This repository provides recipes for building [*pnlpipe*](https://github.com/pnl
 The containers include the following software:
 
 * Python
-* [ANTs]()
-* [unu]()
-* [tract_querier]()
-* [dcm2niix]()
-* [whitematteranalysis]()
+* [ANTs](https://github.com/ANTsX/ANTs)
+* [unu](https://teem.sourceforge.net/unrrdu)
+* [tract_querier](https://github.com/demianw/tract_querier)
+* [dcm2niix](https://github.com/rordenlab/dcm2niix)
+* [whitematteranalysis](https://github.com/SlicerDMRI/whitematteranalysis)
 * [UKFTractography](https://github.com/pnlbwh/UKFTractography)
 * [pnlNipype](https://github.com/pnlbwh/pnlNipype)
 * [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe)
