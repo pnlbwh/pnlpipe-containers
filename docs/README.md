@@ -94,7 +94,6 @@ The containers include the following software:
 * [tract_querier]()
 * [dcm2niix]()
 * [whitematteranalysis]()
-
 * [UKFTractography](https://github.com/pnlbwh/UKFTractography)
 * [pnlNipype](https://github.com/pnlbwh/pnlNipype)
 * [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe)
