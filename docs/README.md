@@ -89,13 +89,21 @@ This repository provides recipes for building [*pnlpipe*](https://github.com/pnl
 The containers include the following software:
 
 * Python
-* ANTs
-* UKFTractography
-* unu
-* tract_querier
-* dcm2niix
-* whitematteranalysis
+* [ANTs]()
+* [unu]()
+* [tract_querier]()
+* [dcm2niix]()
+* [whitematteranalysis]()
 
+* [UKFTractography](https://github.com/pnlbwh/UKFTractography)
+* [pnlNipype](https://github.com/pnlbwh/pnlNipype)
+* [luigi-pnlpipe](https://github.com/pnlbwh/luigi-pnlpipe)
+* [conversion](https://github.com/pnlbwh/conversion)
+* [HCPpipelines](https://github.com/pnlbwh/HCPpipelines)
+* [CNN-Diffusion-MRIBrain-Segmentation](https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation)
+* [HD-BET](https://github.com/pnlbwh/HD-BET)
+
+Consult each software's documentation about their detailed running instructions.
 *pnlpipe* pipeline depends on two other software, installation of which requires you to agree to their license terms:
 
 * [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall) 7.4.1
