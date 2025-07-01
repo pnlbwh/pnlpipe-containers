@@ -151,8 +151,8 @@ From: redhat/ubi9:9.5-1738643550
     conda deactivate
     source miniconda3/bin/activate
     conda clean -y --all
-    rm -rf .cache/pip/ Miniconda3-latest-Linux-x86_64.sh \
-    cmake-3.31.0.tar.gz tcsh-6.22.03-6.el9.x86_64.rpm
+    rm -rf .cache/pip/ Miniconda3-latest-Linux-x86_64.sh
+    rm -f cmake-3.31.0.tar.gz tcsh-6.22.03-6.el9.x86_64.rpm
 
     
     
