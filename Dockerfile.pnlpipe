@@ -1,6 +1,6 @@
-FROM centos:7.5.1804
+FROM redhat/ubi9:9.5-1738643550
 
-MAINTAINER Tashrif Billah <tbillah@bwh.harvard.edu>
+LABEL maintainer="Tashrif Billah <tbillah@bwh.harvard.edu>"
 
     # set up working directory, redefine home directory, remain root user
 WORKDIR /home/pnlbwh
@@ -8,119 +8,147 @@ ENV HOME=/home/pnlbwh
 ENV USER="root"
 ENV LANG=en_US.UTF-8
 
+COPY bin/* /usr/bin/
 COPY startup.sh /
-COPY Slicer-29402.ini /
 COPY .vimrc $HOME/
+COPY .bashrc $HOME/
 
     # install required libraries
 RUN ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime && \
-    yum -y groupinstall 'development tools' && \
-    yum -y install tree wget file bzip2 which vim git make libstdc++-static mesa-libGL bc tcsh libSM libXt-devel \
-    psmisc && \
-    #
-    # libraries for SlicerDMRI/FiberTractMeasurements
-    yum -y install libGLU libXrender && \
+    yum -y install wget file bzip2 which vim git make unzip libstdc++-static mesa-libGL bc libSM && \
+    yum -y install gcc-c++ openssl-devel libX11-devel libXrender libxcrypt-compat libgfortran hostname libXt && \
+    # && \
+    TCSH=tcsh-6.22.03-6.el9.x86_64.rpm && \
+    wget https://dl.rockylinux.org/pub/rocky/9/devel/x86_64/os/Packages/t/$TCSH && \
+    rpm -ivh $TCSH && \
+    # && \
     yum clean all && \
-    rm -rf /var/cache/yum && \
-    #
-    # install freesurfer
-    echo "Downloading FreeSurfer" && \
-    wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/7.1.0/freesurfer-linux-centos7_x86_64-7.1.0.tar.gz > /dev/null 2>&1 && \
-    echo "Unzipping FreeSurfer tar ball" && \
-    tar -xzf freesurfer-linux-centos7_x86_64-7.1.0.tar.gz && \
-    rm -f freesurfer-linux-centos7_x86_64-7.1.0.tar.gz && \
-    mv freesurfer freesurfer-7.1.0 && \
-    #
-    # install MCR for -subfields
-    cd freesurfer-7.1.0 && \
-    curl "https://surfer.nmr.mgh.harvard.edu/fswiki/MatlabRuntime?action=AttachFile&do=get&target=runtime2014bLinux.tar.gz" -o "runtime2014b.tar.gz" && \
-    tar -xzf runtime2014b.tar.gz && rm -f runtime2014b.tar.gz && \
-    cd .. && \
-    #
-    # install FSL
-    echo "Downloading FSL installer" && \
-    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py -O fslinstaller.py > /dev/null 2>&1 && \
-    echo "Installing FSL" && \
-    python fslinstaller.py -V 6.0.1 -d $HOME/fsl-6.0.1 -p > /dev/null 2>&1 && \
-    # setup FSL environment
-    export FSLDIR=$HOME/fsl-6.0.1 && \
-    source $FSLDIR/etc/fslconf/fsl.sh && \
-    $FSLDIR/fslpython/bin/conda clean -y --all && \
-    rm -f fslinstaller.py
-    
-    
-    # clone pnlpipe repositories
-RUN git clone --recurse-submodules https://github.com/pnlbwh/pnlpipe.git && \
+    # && \
+    # install Cmake && \
+    CMAKE=3.31.0 && \
+    wget https://github.com/Kitware/CMake/releases/download/v${CMAKE}/cmake-${CMAKE}.tar.gz && \
+    tar -xzf cmake-${CMAKE}.tar.gz && \
+    cd cmake-${CMAKE} && mkdir build && cd build && \
+    ../bootstrap --parallel=4 && make -j4 && \
+    cd && \
+    # && \
+    # install dcm2niix && \
+    git clone https://github.com/rordenlab/dcm2niix.git && \
+    cd dcm2niix && mkdir build && cd build && \
+    /home/pnlbwh/cmake-${CMAKE}/build/bin/cmake .. && make -j4 && \
+    mv bin/dcm2niix /usr/bin/ && \
+    cd && rm -rf $HOME/dcm2niix && \
+    # && \
+    # install ANTs && \
+    git clone https://github.com/ANTsX/ANTs.git && \
+    cd ANTs && mkdir build && cd build && \
+    /home/pnlbwh/cmake-${CMAKE}/build/bin/cmake .. && make -j4 && \
+    cd && \
+    # && \
+    # install ukftractography && \
+    git clone https://github.com/pnlbwh/ukftractography.git && \
+    cd ukftractography && mkdir build && cd build && \
+    /home/pnlbwh/cmake-${CMAKE}/build/bin/cmake .. && make -j4 && \
+    cd && \
+    # && \
+    # install miniconda3 && \
+    wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
+    /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
+    source miniconda3/bin/activate && \
+    # && \
+    # install pnlpipe && \
     git clone https://github.com/pnlbwh/pnlNipype.git && \
+    conda create -y -n pnlpipe9 -c conda-forge --override-channels python && \
+    conda activate pnlpipe9 && \
+    cd pnlNipype && \
+    pip install -r requirements.txt && \
+    conda deactivate && \
+    cd && \
+    # && \
     git clone https://github.com/pnlbwh/luigi-pnlpipe.git && \
-    #
-    # install CNN-Diffusion-MRIBrain-Segmentation
+    git clone https://github.com/pnlbwh/HCPpipelines.git && \
+    git clone https://github.com/pnlbwh/conversion.git && \
+    # && \
+    # CNN-Diffusion-MRIBrain-Segmentation && \
     git clone https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation.git && \
     cd CNN-Diffusion-MRIBrain-Segmentation && \
     wget https://github.com/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/releases/download/v0.3/model_folder.tar.gz && \
-    tar -xzvf model_folder.tar.gz
-    
-    # install miniconda3
-RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O Miniconda3-latest-Linux-x86_64.sh && \
-    /bin/bash Miniconda3-latest-Linux-x86_64.sh -b -p miniconda3/ && \
-    #
-    # initialize bashrc
-    cp /root/.bashrc $HOME/ && \
-    echo "source $HOME/miniconda3/bin/activate" >> ~/.bashrc && \
-    #
-    # create conda env
-    source miniconda3/bin/activate && \
-    conda env create -f pnlpipe/python_env/environment36.yml && \
-    echo "conda activate pnlpipe3" >> ~/.bashrc && \
-    #
-    # clean up conda cache
+    tar -xzvf model_folder.tar.gz && rm -f model_folder.tar.gz && \
+    conda create -y -n dmri_seg python=3.11 -c conda-forge --override-channels && \
+    conda activate dmri_seg && \
+    pip install 'tensorflow[and-cuda]==2.15.1' && \
+    pip install scikit-image git+https://github.com/pnlbwh/conversion.git && \
     conda deactivate && \
-    conda clean -y --all && \
-    rm -rf $HOME/Miniconda3-latest-Linux-x86_64.sh .cache/pip/*
-    
-    
-    # conda activate is required again because we are beginning a different RUN i.e. shell
-RUN source miniconda3/bin/activate && \
-    conda activate pnlpipe3 && \
-    export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
-    #
-    # build pnlpipe dependencies
-    cd pnlpipe && mkdir soft_dir && export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir && \
-    ./pnlpipe std init && \
-    ./pnlpipe std setup && \
-    #
-    # clean up sources
-    cd soft_dir && \
-    rm -rf BRAINSTools BRAINSTools-build ANTs ANTs-build ANTs-bin-*/CMakeFiles ukftractography UKFTractography-build dcm2niix && \
-    rm -rf /tmp/* /var/tmp/*
-    
-    
-    # set up bashrc i.e shell
-RUN echo "export PNLPIPE_SOFT=$HOME/pnlpipe/soft_dir" >> ~/.bashrc && \
-    echo "alias ls=\"ls --color\"" >> ~/.bashrc && \
-    cd $HOME/pnlpipe/soft_dir && \
-    for d in `find . -name env.sh`; do echo "source \${PNLPIPE_SOFT}/$d" >> ~/.bashrc; done && \
-    cd $HOME && \
-    echo "export FSLDIR=$HOME/fsl-6.0.1" >> ~/.bashrc && \
-    echo "source \$FSLDIR/etc/fslconf/fsl.sh" >> ~/.bashrc && \
-    echo "export PATH=\$FSLDIR/bin:\$PATH" >> ~/.bashrc && \
-    echo "export FREESURFER_HOME=$HOME/freesurfer-7.1.0" >> ~/.bashrc && \
-    echo "source \${FREESURFER_HOME}/SetUpFreeSurfer.sh" >> ~/.bashrc && \
-    echo "export PATH=$HOME/pnlNipype/scripts:$HOME/pnlNipype/exec:$HOME/CNN-Diffusion-MRIBrain-Segmentation/pipeline:\$PATH" >> ~/.bashrc && \
-    echo "export PYTHONPATH=$HOME/luigi-pnlpipe:\$PYTHONPATH" >> ~/.bashrc && \
-    #
-    # remove problematic aliases
-    sed -i "s/alias mv='mv -i'//g" ~/.bashrc && \
-    sed -i "s/alias cp='cp -i'//g" ~/.bashrc && \
-    sed -i "s/alias rm='rm -i'//g" ~/.bashrc && \
-    #
-    # facilitate creation of ~/matlab/startup.m
-    export FREESURFER_HOME=$HOME/freesurfer-7.1.0 && \
+    cd && \
+    # && \
+    # HD-BET && \
+    conda create -y -n hd-bet python=3.9 -c conda-forge --override-channels && \
+    conda activate hd-bet && \
+    git clone --single-branch --branch pnl https://github.com/pnlbwh/HD-BET.git && \
+    cd HD-BET/ && \
+    pip install . && \
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121 && \
+    conda deactivate && \
+    # && \
+    # download HD-BET params && \
+    cd /home/pnlbwh/miniconda3/envs/hd-bet/lib/python3.9/site-packages/HD_BET && \
+    mkdir -p params && cd params && \
+    for i in {0..4}; do wget https://zenodo.org/record/2540695/files/${i}.model; done && \
+    cd && \
+    # && \
+    # whitematteranalysis && \
+    conda create -y -n wma python=3.9 -c conda-forge --override-channel && \
+    conda activate wma && \
+    pip install git+https://github.com/SlicerDMRI/whitematteranalysis.git && \
+    # && \
+    git clone https://github.com/demianw/tract_querier.git && \
+    cd tract_querier && \
+    pip install . && \
+    pip install plumbum && \
+    conda deactivate && \
+    # && \
+    # avoid git dubious ownership error && \
+    git config --system --add safe.directory '*' && \
+    # && \
+    # install FSL && \
+    echo "Downloading FSL installer" && \
+    wget https://fsl.fmrib.ox.ac.uk/fsldownloads/fslinstaller.py -O fslinstaller.py > /dev/null 2>&1 && \
+    echo "Installing FSL" && \
+    V=6.0.7 && \
+    python fslinstaller.py -V $V -d $HOME/fsl-$V > /dev/null && \
+    cd $HOME/fsl-$V/share/fsl/bin && \
+    ln -s eddy_cuda10.2 eddy_cuda && \
+    cd && \
+    # setup FSL environment && \
+    export FSLDIR=$HOME/fsl-$V && \
+    rm -f fslinstaller.py && \
+    # && \
+    # install freesurfer && \
+    echo "Downloading FreeSurfer" && \
+    V=7.4.1 && \
+    TAR=freesurfer-linux-centos8_x86_64-7.4.1.tar.gz && \
+    wget https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${V}/${TAR} > /dev/null 2>&1 && \
+    echo "Unzipping FreeSurfer tar ball" && \
+    tar -xzf $TAR && rm -f $TAR && \
+    mv freesurfer freesurfer-$V && \
+    # && \
+    # install MCR for -subfields && \
+    export FREESURFER_HOME=/home/pnlbwh/freesurfer-$V && \
     source ${FREESURFER_HOME}/SetUpFreeSurfer.sh && \
-    #
-    # change permission of startup script 
-    chmod +x /startup.sh
-    
+    fs_install_mcr R2019b && \
+    # && \
+    # clean up && \
+    cd && \
+    conda deactivate && \
+    source miniconda3/bin/activate && \
+    conda clean -y --all && \
+    rm -rf .cache/pip/ Miniconda3-latest-Linux-x86_64.sh && \
+    rm -f cmake-3.31.0.tar.gz tcsh-6.22.03-6.el9.x86_64.rpm
+
+
+    # change permission of startup script
+RUN chmod +x /startup.sh
+
 
 ENTRYPOINT ["/startup.sh"]
 
