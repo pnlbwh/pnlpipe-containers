@@ -278,10 +278,42 @@ please see https://github.com/tashrifbillah/glxgears-containers for details.
     ../bootstrap && make -j4
     export PATH=`pwd`/build/bin:$PATH
 
+### GPU usage
 
-### ANTs from source
+First of all, you need to have GPU(s) available in your host computer. NVIDIA driver should be installed in your host computer.
+In a Linux device, if `nvidia-smi` prints a valid output, then your host is compatible for GPU jobs.
 
-Only one additional library should be required:
 
-    yum -y install zlib-devel
+    Thu Jul  3 14:56:24 2025
+    +---------------------------------------------------------------------------------------+
+    | NVIDIA-SMI 535.146.02             Driver Version: 535.146.02   CUDA Version: 12.2     |
+    |-----------------------------------------+----------------------+----------------------+
+    | GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+    |                                         |                      |               MIG M. |
+    |=========================================+======================+======================|
+    |   0  NVIDIA GeForce RTX 4080        Off | 00000000:C3:00.0  On |                  N/A |
+    |  0%   36C    P8              15W / 320W |    396MiB / 16376MiB |      2%      Default |
+    |                                         |                      |                  N/A |
+    +-----------------------------------------+----------------------+----------------------+
+
+    +---------------------------------------------------------------------------------------+
+    | Processes:                                                                            |
+    |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+    |        ID   ID                                                             Usage      |
+    |=======================================================================================|
+    |    0   N/A  N/A     76021      G   /usr/libexec/Xorg                           173MiB |
+    |    0   N/A  N/A     76147      G   /usr/bin/gnome-shell                         52MiB |
+    +---------------------------------------------------------------------------------------+
+
+
+* In Singularity, you need to provide `--nv` flag to your `shell` or `run` command to have GPU(s) availabe to the container.
+* In Docker, it is more tricky. You ned to install `nvidia-container-toolkit` on top of the above:
+
+        curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+        dnf config-manager --enable nvidia-container-toolkit-experimental
+        dnf install -y nvidia-container-toolkit
+        systemctl restart docker
+
+  And finally, you have to provide `--gpus=all` flag to your `run` command.
 
