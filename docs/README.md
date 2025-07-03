@@ -60,20 +60,20 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 
 Time profile of various tasks of *pnlpipe* is given below:
 
-| Task                                     | Estimated time hour/subject              |
-|------------------------------------------|------------------------------------------|
-| T1/T2 MABS<sup>~</sup> masking           | 1.5                                      |
-| T1/T2 HD-BET masking                     | 0.1                                      |
-| FreeSurfer segmentation                  | 6 (1mm<sup>3</sup>), 9 (high resolution) |
-| DWI Gibb's unringing                     | 0.5                                      |
-| DWI CNN masking                          | 0.25                                     |
-| FSL eddy correction                      | 2                                        |
-| FSL HCP Pipeline (topup+eddy) correction | 4                                        |
-| PNL eddy correction                      | 0.5                                      |
-| PNL epi correction                       | 0.5                                      |
-| UKF tractography                         | 2                                        |
-| White matter analysis                    | 1.5                                      |
-| FreeSurfer to DWI                        | 1.5                                      |
+| Task                                     | Estimated time hour/subject               |
+|------------------------------------------|-------------------------------------------|
+| T1/T2 MABS<sup>~</sup> masking           | 1.5                                       |
+| T1/T2 HD-BET masking                     | 0.1                                       |
+| FreeSurfer segmentation                  | 6 (1 mm<sup>3</sup>), 9 (high resolution) |
+| DWI Gibb's unringing                     | 0.5                                       |
+| DWI CNN masking                          | 0.25                                      |
+| FSL eddy correction                      | 2                                         |
+| FSL HCP Pipeline (topup+eddy) correction | 4                                         |
+| PNL eddy correction                      | 0.5                                       |
+| PNL epi correction                       | 0.5                                       |
+| UKF tractography                         | 2                                         |
+| White matter analysis                    | 1.5                                       |
+| FreeSurfer to DWI                        | 1.5                                       |
 
 <sup>~</sup>MABS: Multi Atlas Brain Segmentation
 
