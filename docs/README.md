@@ -8,6 +8,7 @@ Developed by Tashrif Billah and Sylvain Bouix, Brigham and Women's Hospital (Har
 Table of contents
 =================
 
+   * [Citation](#citation)
    * [Background](#background)
       * [System requirement](#system-requirement)      
           * [Single machine](#single-machine)
@@ -18,10 +19,16 @@ Table of contents
       * [Singularity](#singularity)
    * [Programs](#programs)
    * [Luigi tasks](#luigi-tasks)
-   * [Citation](#citation)
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
    * [Appendix](#appendix)
+
+
+# Citation
+
+If *pnlpipe-containers* are useful in your research, please cite as below:
+
+Billah, Tashrif; Bouix, Sylvain; Rathi, Yogesh; NIFTI MRI processing pipeline, https://github.com/pnlbwh/pnlNipype, 2019, DOI: 10.5281/zenodo.3258854
 
 
 # Background
@@ -53,20 +60,20 @@ If you are new to the container concept, it can be resourceful to see Tashrif's 
 
 Time profile of various tasks of *pnlpipe* is given below:
 
-| Task                                     | Estimated time hour/subject              |
-|------------------------------------------|------------------------------------------|
-| T1/T2 MABS<sup>~</sup> masking           | 1.5                                      |
-| T1/T2 HD-BET masking                     | 0.1                                      |
-| FreeSurfer segmentation                  | 6 (1mm<sup>3</sup>), 9 (high resolution) |
-| DWI Gibb's unringing                     | 0.5                                      |
-| DWI CNN masking                          | 0.25                                     |
-| FSL eddy correction                      | 2                                        |
-| FSL HCP Pipeline (topup+eddy) correction | 4                                        |
-| PNL eddy correction                      | 0.5                                      |
-| PNL epi correction                       | 0.5                                      |
-| UKF tractography                         | 2                                        |
-| White matter analysis                    | 1.5                                      |
-| FreeSurfer to DWI                        | 1.5                                      |
+| Task                                     | Estimated time hour/subject               |
+|------------------------------------------|-------------------------------------------|
+| T1/T2 MABS<sup>~</sup> masking           | 1.5                                       |
+| T1/T2 HD-BET masking                     | 0.1                                       |
+| FreeSurfer segmentation                  | 6 (1 mm<sup>3</sup>), 9 (high resolution) |
+| DWI Gibb's unringing                     | 0.5                                       |
+| DWI CNN masking                          | 0.25                                      |
+| FSL eddy correction                      | 2                                         |
+| FSL HCP Pipeline (topup+eddy) correction | 4                                         |
+| PNL eddy correction                      | 0.5                                       |
+| PNL epi correction                       | 0.5                                       |
+| UKF tractography                         | 2                                         |
+| White matter analysis                    | 1.5                                       |
+| FreeSurfer to DWI                        | 1.5                                       |
 
 <sup>~</sup>MABS: Multi Atlas Brain Segmentation
 
@@ -175,9 +182,7 @@ Once inside the shell, you might want to set `alias ls='ls --color'` in the firs
 # Programs
 
 All *pnlpipe* scripts and executables are available to `docker run ...` and `singularity run ...`. 
-You may learn more about them in the corresponding tutorials:
-
-*pnlNipype* https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md
+You may learn more about them in corresponding tutorials linked above.
 
 
 # Luigi tasks
@@ -194,6 +199,7 @@ Now shell into the containers and run programs from the interactive shells:
 
     # Launch Docker container
     docker run --rm -ti \
+    --gpus=all --network=host \
     -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.4.1/license.txt \
     -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
     -v /host/path/to/myData:/home/pnlbwh/myData \
@@ -201,7 +207,7 @@ Now shell into the containers and run programs from the interactive shells:
 
     # Inside the container
     cd /home/pnlbwh
-    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/hcp/T2w_mask_params.cfg
+    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/params/hcp/T2w_mask_params.cfg
     luigi-pnlpipe/workflows/ExecuteTask.py -c 1001 -s 1 --t1-template sub-*/ses-*/anat/*_T1w.nii.gz --task StructMask \
     --bids-data-dir /home/pnlbwh/myData/rawdata
 
@@ -219,19 +225,18 @@ Now shell into the containers and run programs from the interactive shells:
     
     # Inside the container
     cd /home/pnlbwh
-    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/hcp/T2w_mask_params.cfg
+    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/params/hcp/T2w_mask_params.cfg
     luigi-pnlpipe/workflows/ExecuteTask.py -c 1001 -s 1 --t1-template sub-*/ses-*/anat/*_T1w.nii.gz --task StructMask \
     --bids-data-dir /home/pnlbwh/myData/rawdata
 
 
 You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
+Example:
 
-
-# Citation
-
-If *pipeline* containers are useful in your research, please cite as below:
-
-Billah, Tashrif; Bouix, Sylvain; Rathi, Yogesh; NIFTI MRI processing pipeline, https://github.com/pnlbwh/pnlNipype, 2019, DOI: 10.5281/zenodo.3258854
+    # Inside the container
+    cp /home/pnlbwh/luigi-pnlpipe/params/hcp/T2w_mask_params.cfg /tmp/
+    vim /tmp/T2w_mask_params.cfg
+    export LUIGI_CONFIG_PATH=/tmp/T2w_mask_params.cfg
 
 
 # Tests
@@ -273,10 +278,42 @@ please see https://github.com/tashrifbillah/glxgears-containers for details.
     ../bootstrap && make -j4
     export PATH=`pwd`/build/bin:$PATH
 
+### GPU usage
 
-### ANTs from source
+First of all, you need to have GPU(s) available in your host computer. NVIDIA driver should be installed in your host computer.
+In a Linux device, if `nvidia-smi` prints a valid output, then your host is compatible for GPU jobs.
 
-Only one additional library should be required:
 
-    yum -y install zlib-devel
+    Thu Jul  3 14:56:24 2025
+    +---------------------------------------------------------------------------------------+
+    | NVIDIA-SMI 535.146.02             Driver Version: 535.146.02   CUDA Version: 12.2     |
+    |-----------------------------------------+----------------------+----------------------+
+    | GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+    | Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+    |                                         |                      |               MIG M. |
+    |=========================================+======================+======================|
+    |   0  NVIDIA GeForce RTX 4080        Off | 00000000:C3:00.0  On |                  N/A |
+    |  0%   36C    P8              15W / 320W |    396MiB / 16376MiB |      2%      Default |
+    |                                         |                      |                  N/A |
+    +-----------------------------------------+----------------------+----------------------+
+
+    +---------------------------------------------------------------------------------------+
+    | Processes:                                                                            |
+    |  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+    |        ID   ID                                                             Usage      |
+    |=======================================================================================|
+    |    0   N/A  N/A     76021      G   /usr/libexec/Xorg                           173MiB |
+    |    0   N/A  N/A     76147      G   /usr/bin/gnome-shell                         52MiB |
+    +---------------------------------------------------------------------------------------+
+
+
+* In Singularity, you need to provide `--nv` flag to your `shell` or `run` command to have GPU(s) availabe to the container.
+* In Docker, it is more tricky. You ned to install `nvidia-container-toolkit` on top of the above:
+
+        curl -s -L https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo | sudo tee /etc/yum.repos.d/nvidia-container-toolkit.repo
+        dnf config-manager --enable nvidia-container-toolkit-experimental
+        dnf install -y nvidia-container-toolkit
+        systemctl restart docker
+
+  And finally, you need to provide `--gpus=all` flag to your `run` command to have GPU(s) availabe to the container.
 

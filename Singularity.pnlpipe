@@ -23,11 +23,11 @@ From: redhat/ubi9:9.5-1738643550
     # install required libraries
     yum -y install wget file bzip2 which vim git make unzip libstdc++-static mesa-libGL bc libSM \
     gcc-c++ openssl-devel libX11-devel libXrender libxcrypt-compat libgfortran hostname libXt
-    
+    #
     TCSH=tcsh-6.22.03-6.el9.x86_64.rpm
     wget https://dl.rockylinux.org/pub/rocky/9/devel/x86_64/os/Packages/t/$TCSH
     rpm -ivh $TCSH
-    
+    #
     yum clean all
     #
     # install Cmake
@@ -99,10 +99,7 @@ From: redhat/ubi9:9.5-1738643550
     # download HD-BET params
     cd /home/pnlbwh/miniconda3/envs/hd-bet/lib/python3.9/site-packages/HD_BET
     mkdir -p params && cd params
-    for i in {0..4}
-    do
-        wget https://zenodo.org/record/2540695/files/${i}.model
-    done
+    for i in {0..4}; do wget https://zenodo.org/record/2540695/files/${i}.model; done
     cd
     #
     # whitematteranalysis
@@ -151,8 +148,8 @@ From: redhat/ubi9:9.5-1738643550
     conda deactivate
     source miniconda3/bin/activate
     conda clean -y --all
-    rm -rf .cache/pip/ Miniconda3-latest-Linux-x86_64.sh \
-    cmake-3.31.0.tar.gz tcsh-6.22.03-6.el9.x86_64.rpm
+    rm -rf .cache/pip/ Miniconda3-latest-Linux-x86_64.sh
+    rm -f cmake-3.31.0.tar.gz tcsh-6.22.03-6.el9.x86_64.rpm
 
     
     
