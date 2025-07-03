@@ -194,6 +194,7 @@ Now shell into the containers and run programs from the interactive shells:
 
     # Launch Docker container
     docker run --rm -ti \
+    --gpus=all --network=host \
     -v /host/path/to/freesurfer/license.txt:/home/pnlbwh/freesurfer-7.4.1/license.txt \
     -v /host/path/to/IITmean_b0_256.nii.gz:/home/pnlbwh/CNN-Diffusion-MRIBrain-Segmentation/model_folder/IITmean_b0_256.nii.gz \
     -v /host/path/to/myData:/home/pnlbwh/myData \
