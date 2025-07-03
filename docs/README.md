@@ -19,7 +19,6 @@ Table of contents
       * [Singularity](#singularity)
    * [Programs](#programs)
    * [Luigi tasks](#luigi-tasks)
-
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
    * [Appendix](#appendix)
