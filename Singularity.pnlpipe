@@ -99,10 +99,7 @@ From: redhat/ubi9:9.5-1738643550
     # download HD-BET params
     cd /home/pnlbwh/miniconda3/envs/hd-bet/lib/python3.9/site-packages/HD_BET
     mkdir -p params && cd params
-    for i in {0..4}
-    do
-        wget https://zenodo.org/record/2540695/files/${i}.model
-    done
+    for i in {0..4}; do wget https://zenodo.org/record/2540695/files/${i}.model; done
     cd
     #
     # whitematteranalysis
