@@ -315,5 +315,5 @@ In a Linux device, if `nvidia-smi` prints a valid output, then your host is comp
         dnf install -y nvidia-container-toolkit
         systemctl restart docker
 
-  And finally, you have to provide `--gpus=all` flag to your `run` command.
+  And finally, you need to provide `--gpus=all` flag to your `run` command to have GPU(s) availabe to the container.
 
