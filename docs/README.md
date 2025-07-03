@@ -207,7 +207,7 @@ Now shell into the containers and run programs from the interactive shells:
 
     # Inside the container
     cd /home/pnlbwh
-    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/hcp/T2w_mask_params.cfg
+    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/params/hcp/T2w_mask_params.cfg
     luigi-pnlpipe/workflows/ExecuteTask.py -c 1001 -s 1 --t1-template sub-*/ses-*/anat/*_T1w.nii.gz --task StructMask \
     --bids-data-dir /home/pnlbwh/myData/rawdata
 
@@ -225,7 +225,7 @@ Now shell into the containers and run programs from the interactive shells:
     
     # Inside the container
     cd /home/pnlbwh
-    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/hcp/T2w_mask_params.cfg
+    export LUIGI_CONFIG_PATH=`pwd`/luigi-pnlpipe/params/hcp/T2w_mask_params.cfg
     luigi-pnlpipe/workflows/ExecuteTask.py -c 1001 -s 1 --t1-template sub-*/ses-*/anat/*_T1w.nii.gz --task StructMask \
     --bids-data-dir /home/pnlbwh/myData/rawdata
 
