@@ -183,9 +183,7 @@ Once inside the shell, you might want to set `alias ls='ls --color'` in the firs
 # Programs
 
 All *pnlpipe* scripts and executables are available to `docker run ...` and `singularity run ...`. 
-You may learn more about them in the corresponding tutorials:
-
-*pnlNipype* https://github.com/pnlbwh/pnlNipype/blob/master/docs/TUTORIAL.md
+You may learn more about them in corresponding tutorials linked above.
 
 
 # Luigi tasks
