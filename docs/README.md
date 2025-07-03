@@ -230,8 +230,13 @@ Now shell into the containers and run programs from the interactive shells:
     --bids-data-dir /home/pnlbwh/myData/rawdata
 
 
-You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
+* You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
+  Example:
 
+    # Inside the container
+    cp /home/pnlbwh/luigi-pnlpipe/params/hcp/T2w_mask_params.cfg /tmp/
+    vim /tmp/T2w_mask_params.cfg
+    export LUIGI_CONFIG_PATH=/tmp/T2w_mask_params.cfg
 
 
 # Tests
