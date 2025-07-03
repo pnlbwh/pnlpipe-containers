@@ -8,6 +8,7 @@ Developed by Tashrif Billah and Sylvain Bouix, Brigham and Women's Hospital (Har
 Table of contents
 =================
 
+   * [Citation](#citation)
    * [Background](#background)
       * [System requirement](#system-requirement)      
           * [Single machine](#single-machine)
@@ -18,10 +19,17 @@ Table of contents
       * [Singularity](#singularity)
    * [Programs](#programs)
    * [Luigi tasks](#luigi-tasks)
-   * [Citation](#citation)
+
    * [Tests](#tests)
    * [Data analysis](#data-analysis)
    * [Appendix](#appendix)
+
+
+# Citation
+
+If *pnlpipe-containers* are useful in your research, please cite as below:
+
+Billah, Tashrif; Bouix, Sylvain; Rathi, Yogesh; NIFTI MRI processing pipeline, https://github.com/pnlbwh/pnlNipype, 2019, DOI: 10.5281/zenodo.3258854
 
 
 # Background
@@ -227,12 +235,6 @@ Now shell into the containers and run programs from the interactive shells:
 
 You may need to edit Luigi configuration files before running *luigi-pnlpipe* tasks hence we recommend using interactive shells.
 
-
-# Citation
-
-If *pipeline* containers are useful in your research, please cite as below:
-
-Billah, Tashrif; Bouix, Sylvain; Rathi, Yogesh; NIFTI MRI processing pipeline, https://github.com/pnlbwh/pnlNipype, 2019, DOI: 10.5281/zenodo.3258854
 
 
 # Tests
